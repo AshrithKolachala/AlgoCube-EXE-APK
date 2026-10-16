@@ -26,9 +26,7 @@ jobs:
             SDKMANAGER="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
           fi
           echo "Using sdkmanager at $SDKMANAGER"
-          # Install modern cmdline-tools and required SDK components (adjust API/build-tools as needed)
           yes | "$SDKMANAGER" --sdk_root="$ANDROID_SDK_ROOT" "cmdline-tools;latest" "platform-tools" "platforms;android-33" "build-tools;33.0.0"
-          # Accept licenses
           yes | "$SDKMANAGER" --sdk_root="$ANDROID_SDK_ROOT" --licenses || true
 
       - uses: gradle/actions/setup-gradle@v4
@@ -36,7 +34,7 @@ jobs:
           gradle-version: '8.7'
 
       - name: Build debug APK
-        run: ./gradlew assembleDebug --no-daemon
+        run: gradle assembleDebug --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
