@@ -1,0 +1,1540 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>AlgoCube 119</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Learn, practise, train and test all 119 CFOP algorithms.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: sticky top bar with tabs; content in a centred column; cube stage beside the controls on wide screens, stacked on phones. */
+:root {
+  --bg: #EEF0F4; --surface: #FFFFFF; --surface2: #F5F6F9; --ink: #141824; --ink2: #4B5365; --ink3: #7B8497; --line: #DADEE7;
+  --accent: #2B5BDB; --accent-ink: #FFFFFF; --accent-soft: #E3EAFB;
+  --f2l: #2B5BDB; --oll: #D9731A; --pll: #1B9A58; --good: #1B9A58; --bad: #D13442; --warn: #C98A10;
+  --stage1: #F9FAFC; --stage2: #DDE2EC; --shadow: 0 1px 2px rgba(20,24,36,.06), 0 6px 20px rgba(20,24,36,.05);
+  --display: 'Familjen Grotesk', 'Trebuchet MS', system-ui, sans-serif; --body: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0D1017; --surface: #161B25; --surface2: #1C2230; --ink: #E9EDF5; --ink2: #A9B2C4; --ink3: #7A8499; --line: #2A3243;
+  --accent: #7EA0FF; --accent-ink: #0B1020; --accent-soft: #1D2745; --f2l: #7EA0FF; --oll: #F59A4C; --pll: #4FCB8A; --good: #4FCB8A; --bad: #FF6B78; --warn: #E8B24A;
+  --stage1: #222A3B; --stage2: #10141D; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3); color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0D1017; --surface: #161B25; --surface2: #1C2230; --ink: #E9EDF5; --ink2: #A9B2C4; --ink3: #7A8499; --line: #2A3243;
+  --accent: #7EA0FF; --accent-ink: #0B1020; --accent-soft: #1D2745; --f2l: #7EA0FF; --oll: #F59A4C; --pll: #4FCB8A; --good: #4FCB8A; --bad: #FF6B78; --warn: #E8B24A;
+  --stage1: #222A3B; --stage2: #10141D; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3); color-scheme: dark; }
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); -webkit-text-size-adjust: 100%; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); letter-spacing: -.01em; margin: 0; text-wrap: balance; line-height: 1.15; }
+h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 700; } h2 { font-size: 22px; font-weight: 700; } h3 { font-size: 17px; margin-bottom: 6px; }
+p { margin: 0 0 8px; } .muted { color: var(--ink2); } .small { font-size: 13px; } .mono { font-family: var(--mono); }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; } :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.top, .main { max-width: 1180px; margin: 0 auto; width: 100%; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0 10px; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.brand { display: flex; align-items: center; gap: 9px; } .wm { font: 700 21px var(--display); letter-spacing: -.02em; } .wm2 { font: 600 12px var(--mono); color: var(--ink2); border: 1px solid var(--line); border-radius: 99px; padding: 1px 8px; }
+.tabs { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 4px; }
+.tabs button { border: 0; background: none; padding: 7px 14px; border-radius: 9px; font-weight: 600; color: var(--ink2); }
+.tabs button.on { background: var(--accent); color: var(--accent-ink); }
+.main { padding: 8px 0 60px; min-width: 0; }
+.phead { margin: 8px 0 18px; } .lede { color: var(--ink2); max-width: 62ch; margin-top: 6px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.card.active { border-color: var(--accent); } .card.dim { opacity: .62; }
+.card.prose { display: block; } .card.prose ul, .card.prose ol { margin: 6px 0 0; padding-left: 20px; } .card.prose li { margin-bottom: 4px; }
+.row { display: flex; align-items: center; } .gap { gap: 10px; } .wrap { flex-wrap: wrap; } .between { justify-content: space-between; gap: 10px; }
+.flabel { font: 700 12px var(--body); text-transform: uppercase; letter-spacing: .08em; color: var(--ink2); } .flabel.sp { margin-top: 6px; }
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 8px 14px; font-weight: 600; min-height: 38px; }
+.btn:hover { border-color: var(--ink3); } .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); } .btn.ghost { background: transparent; }
+.btn.sm { padding: 4px 10px; min-height: 30px; font-size: 13px; } .btn.lg { padding: 12px 22px; font-size: 16px; align-self: flex-start; } .btn:disabled { opacity: .45; cursor: not-allowed; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 99px; padding: 4px 11px; font-size: 13px; font-weight: 600; }
+.chip.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; } .linkbtn { background: none; border: 0; color: var(--accent); padding: 0 4px; text-decoration: underline; font-size: 12px; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--surface2); }
+.seg button { border: 0; background: none; padding: 6px 12px; font-weight: 600; color: var(--ink2); font-size: 14px; } .seg button.on { background: var(--accent); color: var(--accent-ink); }
+input[type=text], input[type=search], select, textarea { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; min-width: 0; width: 100%; }
+select { width: auto; max-width: 100%; } textarea { resize: vertical; font-family: var(--body); }
+.field { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; } .form { gap: 16px; max-width: 760px; }
+.check, .tog { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; font-size: 14px; } .tog { border: 1px solid var(--line); border-radius: 10px; padding: 7px 12px; background: var(--surface2); }
+.tog.s-f2l { color: var(--f2l); } .tog.s-oll { color: var(--oll); } .tog.s-pll { color: var(--pll); }
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; } .stepper button { border: 0; background: var(--surface2); width: 36px; height: 34px; font-size: 18px; } .stv { min-width: 40px; text-align: center; font-weight: 700; }
+.pill { display: inline-block; font: 700 11px var(--mono); letter-spacing: .06em; border-radius: 6px; padding: 2px 7px; color: #fff; vertical-align: middle; }
+.set-f2l { background: var(--f2l); } .set-oll { background: var(--oll); } .set-pll { background: var(--pll); }
+:root[data-theme="dark"] .pill { color: #0B1020; } @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .pill { color: #0B1020; } }
+
+/* learn */
+.learn { display: grid; grid-template-columns: minmax(0, 1fr) 440px; gap: 24px; align-items: start; }
+.learn-detail { position: sticky; top: calc(70px + env(safe-area-inset-top, 0px)); display: flex; flex-direction: column; gap: 12px; max-height: calc(100vh - 84px); overflow-y: auto; padding: 2px 4px 20px 2px; min-width: 0; }
+.back { display: none; }
+.setTabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.stab { border: 1px solid var(--line); background: var(--surface); border-radius: 10px; padding: 7px 14px; font-weight: 700; } .stab.on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.filters { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; margin-bottom: 8px; }
+.cgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 10px; margin-top: 8px; }
+.ghead { grid-column: 1 / -1; font: 700 13px var(--body); color: var(--ink2); margin-top: 12px; display: flex; align-items: center; gap: 6px; }
+.cc { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px 8px 9px; text-align: center; display: flex; flex-direction: column; gap: 4px; align-items: center; min-width: 0; }
+.cc:hover { border-color: var(--ink3); } .cc.sel { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.cc-d { width: 84px; max-width: 100%; aspect-ratio: 1; } .cc-d svg { width: 100%; height: 100%; display: block; }
+.cc-t { font: 700 13px var(--body); display: flex; align-items: center; gap: 6px; } .cc-s { font-size: 11px; color: var(--ink2); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); display: inline-block; } .dot.st-learning { background: var(--warn); } .dot.st-learned { background: var(--good); }
+.empty, .placeholder { color: var(--ink2); padding: 28px 8px; text-align: center; grid-column: 1 / -1; } .ph-icon { width: 120px; margin: 0 auto 8px; opacity: .8; } .ph-icon svg { width: 100%; }
+.dhead { display: flex; align-items: center; gap: 10px; justify-content: space-between; } .dtitle { flex: 1; min-width: 0; } .dnav { display: flex; gap: 4px; }
+.stage-slot { width: 100%; max-width: 460px; aspect-ratio: 1; margin: 0 auto; }
+.stage { position: relative; width: 100%; height: 100%; border-radius: 18px; background: radial-gradient(circle at 50% 40%, var(--stage1), var(--stage2)); border: 1px solid var(--line); overflow: hidden; }
+.stage-cv { position: absolute; inset: 0; } .cube-canvas { width: 100%; height: 100%; display: block; cursor: grab; }
+.stage-tools { position: absolute; left: 8px; right: 8px; bottom: 8px; display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; pointer-events: none; } .stage-tools .chip { pointer-events: auto; background: color-mix(in srgb, var(--surface) 85%, transparent); }
+.cube-fallback { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 10px; height: 100%; align-items: center; } .cube-fallback svg { width: 100%; }
+.ctl { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; } .ctl .btn { min-width: 44px; } .ctl select { margin-left: auto; }
+.prog { height: 5px; background: var(--line); border-radius: 9px; overflow: hidden; } .prog i { display: block; height: 100%; background: var(--accent); transition: width .2s; }
+.alg, .bigalg { font-family: var(--mono); font-weight: 500; line-height: 2; } .algbox { font-size: 17px; }
+.mv { display: inline-block; padding: 0 5px; border-radius: 6px; cursor: pointer; } .mv.on { background: var(--accent); color: var(--accent-ink); } .mv.done { color: var(--ink3); }
+.bigalg { font-size: 17px; } .bigalg .mv { cursor: default; } .scr { font-size: 15px; color: var(--ink); word-break: break-word; }
+.alts { display: flex; gap: 6px; }
+.recog { flex-direction: row; gap: 14px; align-items: flex-start; } .cdiag { width: 112px; flex: none; } .cdiag svg { width: 100%; display: block; } .cdiag.sm { width: 84px; }
+.facts { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--ink2); } .star { color: var(--warn); font-weight: 700; }
+/* two-column working screens */
+.two { display: grid; grid-template-columns: minmax(0, 460px) minmax(0, 1fr); gap: 22px; align-items: start; } .slotcol { display: flex; flex-direction: column; gap: 10px; position: sticky; top: calc(70px + env(safe-area-inset-top, 0px)); } .panelcol { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.pickrow { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; } .pickrow select { flex: 1; min-width: 200px; }
+.statusline { border: 1px dashed var(--line); border-radius: 10px; padding: 8px 12px; color: var(--ink2); font-size: 14px; } .statusline.ok { border: 1px solid var(--good); color: var(--good); font-weight: 600; } .statusline.bad { border: 1px solid var(--bad); color: var(--bad); font-weight: 600; }
+.casehead { flex-direction: row; gap: 14px; align-items: center; } .big { font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.runhead { display: flex; justify-content: space-between; align-items: flex-end; gap: 10px; margin: 6px 0 10px; } .runhead + .prog { margin-bottom: 14px; }
+.movepad { display: flex; flex-direction: column; gap: 8px; } .pad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; } .pad-g { display: flex; gap: 3px; } .pad-x { grid-template-columns: repeat(5, 1fr); }
+.mb { border: 1px solid var(--line); background: var(--surface2); border-radius: 8px; min-height: 36px; padding: 0 4px; flex: 1; font: 600 14px var(--mono); } .mb:hover { border-color: var(--accent); } .mb:active { background: var(--accent-soft); }
+.nota { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; } .nota .mb.wide { min-height: 40px; } .pad-foot { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+.customgrid { width: 100%; background: var(--surface2); border-radius: 10px; padding: 8px 10px 12px; } .customgrid .ghead { margin-top: 6px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 14px; } .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+.tv { font: 700 28px var(--display); font-variant-numeric: tabular-nums; } .tl { color: var(--ink2); font-size: 13px; }
+.rrow { display: flex; align-items: center; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); flex-wrap: wrap; } .rrow:last-child { border-bottom: 0; } .rrow > :nth-child(3) { margin-left: auto; }
+.res { width: 24px; height: 24px; border-radius: 50%; display: inline-grid; place-items: center; color: #fff; font-weight: 700; } .res.ok { background: var(--good); } .res.bad { background: var(--bad); }
+.bar { height: 8px; background: var(--surface2); border-radius: 9px; overflow: hidden; display: flex; } .b-l { background: var(--good); } .b-g { background: var(--warn); }
+.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)); gap: 5px; } .card + .card { margin-top: 0; }
+.mcell { border: 2px solid var(--line); border-radius: 8px; min-height: 36px; font: 600 12px var(--mono); background: linear-gradient(to top, color-mix(in srgb, var(--good) 55%, transparent) calc(var(--m) * 100%), var(--surface2) calc(var(--m) * 100%)); }
+.mcell.st-learning { border-color: var(--warn); } .mcell.st-learned { border-color: var(--good); }
+#toast { position: fixed; left: 50%; bottom: calc(76px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); background: var(--ink); color: var(--bg); padding: 9px 16px; border-radius: 10px; opacity: 0; pointer-events: none; transition: .2s; z-index: 50; font-weight: 600; }
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+.iso, .topv { display: block; }
+
+@media (max-width: 979px) {
+  .learn { grid-template-columns: minmax(0, 1fr); } .learn-detail { position: static; max-height: none; overflow: visible; padding: 0; }
+  .learn:not(.has-sel) .learn-detail { display: none; } .learn.has-sel .learn-list { display: none; } .back { display: inline-flex; }
+  .two { grid-template-columns: minmax(0, 1fr); } .slotcol { position: static; }
+}
+@media (max-width: 760px) {
+  .top { flex-direction: row; } .tabs { position: fixed; left: max(8px, env(safe-area-inset-left, 0px)); right: max(8px, env(safe-area-inset-right, 0px)); bottom: calc(8px + env(safe-area-inset-bottom, 0px)); z-index: 40; justify-content: space-between; box-shadow: var(--shadow); }
+  .tabs button { padding: 9px 4px; font-size: 12.5px; flex: 1; } .main { padding-bottom: 100px; } .wm2 { display: none; }
+  .filters { grid-template-columns: 1fr 1fr; } .filters input { grid-column: 1 / -1; } .recog { flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+</style>
+<div id="app"></div><div id="toast" role="status" aria-live="polite"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ===== Cube engine: sticker-permutation model =====
+   Faces order: U R F D L B. Colour id = id of the face a sticker belongs to when solved.
+   Scheme used by the app: U yellow, R orange, F green, D white, L red, B blue. */
+(function (root) {
+  var FACES = ['U', 'R', 'F', 'D', 'L', 'B'];
+  var NORMAL = { U: [0, 1, 0], R: [1, 0, 0], F: [0, 0, 1], D: [0, -1, 0], L: [-1, 0, 0], B: [0, 0, -1] };
+  var SLOTS = []; // {pos, n, face}
+  var SLOT_INDEX = {};
+  function key(p, n) { return p.join(',') + '|' + n.join(','); }
+  FACES.forEach(function (f, fi) {
+    var n = NORMAL[f];
+    for (var a = 1; a >= -1; a--) for (var b = -1; b <= 1; b++) {
+      var pos;
+      // row/col ordering similar to the standard net (top-left to bottom-right, as seen from outside)
+      if (f === 'U') pos = [b, 1, -a];
+      else if (f === 'D') pos = [b, -1, a];
+      else if (f === 'F') pos = [b, a, 1];
+      else if (f === 'B') pos = [-b, a, -1];
+      else if (f === 'R') pos = [1, a, -b];
+      else pos = [-1, a, b];
+      var idx = SLOTS.length;
+      SLOTS.push({ pos: pos, n: n.slice(), face: fi });
+      SLOT_INDEX[key(pos, n)] = idx;
+    }
+  });
+  function slotAt(p, n) { return SLOT_INDEX[key(p, n)]; }
+
+  function rot(v, axis, k) { // k quarter turns, right-handed about +axis
+    k = ((k % 4) + 4) % 4;
+    var x = v[0], y = v[1], z = v[2], t;
+    for (var i = 0; i < k; i++) {
+      if (axis === 0) { t = y; y = -z; z = t; }
+      else if (axis === 1) { t = x; x = z; z = -t; }
+      else { t = x; x = -y; y = t; }
+    }
+    return [x, y, z];
+  }
+
+  // base move table: name -> {axis, layers, k(clockwise quarter = k)}
+  var BASE = {
+    R: [0, [1], -1], L: [0, [-1], 1], U: [1, [1], -1], D: [1, [-1], 1], F: [2, [1], -1], B: [2, [-1], 1],
+    M: [0, [0], 1], E: [1, [0], 1], S: [2, [0], -1],
+    r: [0, [0, 1], -1], l: [0, [-1, 0], 1], u: [1, [0, 1], -1], d: [1, [-1, 0], 1], f: [2, [0, 1], -1], b: [2, [-1, 0], 1],
+    x: [0, [-1, 0, 1], -1], y: [1, [-1, 0, 1], -1], z: [2, [-1, 0, 1], -1]
+  };
+
+  function parseToken(t) {
+    var m = /^([URFDLBMESxyzurfdlb])(w?)(2'|'2|2|')?$/.exec(t);
+    if (!m) return null;
+    var name = m[1];
+    if (m[2] === 'w') name = name.toLowerCase();
+    var suf = m[3] || '';
+    var turns = (suf === '2' || suf === "2'" || suf === "'2") ? 2 : (suf === "'" ? -1 : 1);
+    return { name: name, turns: turns };
+  }
+  function tokenize(alg) {
+    if (Array.isArray(alg)) return alg.slice();
+    return String(alg || '').replace(/[()\[\]]/g, ' ').replace(/’/g, "'").split(/\s+/).filter(Boolean);
+  }
+  function normToken(t) { // 'Rw' -> 'r'
+    var p = parseToken(t); if (!p) return t;
+    return p.name + (p.turns === 2 ? '2' : (p.turns === -1 ? "'" : ''));
+  }
+  function tokens(alg) { return tokenize(alg).map(normToken); }
+
+  var PERM_CACHE = {};
+  function permFor(name, turns) { // turns: 1,-1,2  (clockwise = +1)
+    var ck = name + turns;
+    if (PERM_CACHE[ck]) return PERM_CACHE[ck];
+    var b = BASE[name];
+    var axis = b[0], layers = b[1], k = b[2] * turns;
+    var perm = new Array(54);
+    for (var i = 0; i < 54; i++) {
+      var s = SLOTS[i];
+      if (layers.indexOf(s.pos[axis]) >= 0) {
+        perm[i] = slotAt(rot(s.pos, axis, k), rot(s.n, axis, k));
+      } else perm[i] = i;
+    }
+    PERM_CACHE[ck] = perm;
+    return perm;
+  }
+  function solved() { var s = new Uint8Array(54); for (var i = 0; i < 54; i++) s[i] = SLOTS[i].face; return s; }
+  function applyPerm(state, perm) { var o = new Uint8Array(54); for (var i = 0; i < 54; i++) o[perm[i]] = state[i]; return o; }
+  function applyMove(state, tok) {
+    var p = parseToken(tok); if (!p) throw new Error('Bad move: ' + tok);
+    return applyPerm(state, permFor(p.name, p.turns));
+  }
+  function applyAlg(state, alg) {
+    var t = tokens(alg), s = state;
+    for (var i = 0; i < t.length; i++) s = applyMove(s, t[i]);
+    return s;
+  }
+  function invertToken(t) {
+    var p = parseToken(t);
+    if (p.turns === 2) return p.name + '2';
+    return p.name + (p.turns === 1 ? "'" : '');
+  }
+  function invert(alg) { return tokens(alg).reverse().map(invertToken); }
+  function toString(a) { return (Array.isArray(a) ? a : tokenize(a)).join(' '); }
+
+  // cancel / merge consecutive moves of the same name
+  function simplify(alg) {
+    var out = [];
+    tokens(alg).forEach(function (t) {
+      var p = parseToken(t);
+      var last = out.length ? out[out.length - 1] : null;
+      if (last && last.name === p.name) {
+        var tot = (((last.turns + p.turns) % 4) + 4) % 4; // -1 -> 3
+        // normalise turns: represent in 1,2,3
+        var lt = ((last.turns % 4) + 4) % 4, pt = ((p.turns % 4) + 4) % 4;
+        tot = (lt + pt) % 4;
+        out.pop();
+        if (tot !== 0) out.push({ name: p.name, turns: tot === 3 ? -1 : tot });
+      } else out.push({ name: p.name, turns: p.turns });
+    });
+    return out.map(function (p) { return p.name + (p.turns === 2 ? '2' : (p.turns === -1 ? "'" : '')); });
+  }
+  // iterate simplify to collapse e.g. R U U' R'
+  function simplifyAll(alg) {
+    var a = tokens(alg), prev;
+    do { prev = a.length; a = simplify(a); } while (a.length !== prev);
+    return a;
+  }
+
+  // map faces for slot conjugation (rotates the case around the U axis)
+  var Y_RING = ['R', 'F', 'L', 'B'];
+  function mapToken(t, k) {
+    var p = parseToken(t); k = ((k % 4) + 4) % 4;
+    if (!k) return normToken(t);
+    var name = p.name, out = name, turns = p.turns, lower = name === name.toLowerCase() && 'rlufdb'.indexOf(name) >= 0;
+    var up = name.toUpperCase();
+    if ('RFLB'.indexOf(up) >= 0 && /[a-zA-Z]/.test(name) && name !== 'M' && name !== 'E' && name !== 'S' && 'xyz'.indexOf(name) < 0) {
+      var i = Y_RING.indexOf(up);
+      var nf = Y_RING[(i + k) % 4];
+      out = lower ? nf.toLowerCase() : nf;
+    } else if (name === 'M' || name === 'S') {
+      // M follows L, S follows F ; ring index of L=2, F=1.
+      var cur = name === 'M' ? 2 : 1; // position of the face the slice follows
+      var ni = (cur + k) % 4; var face = Y_RING[ni];
+      if (face === 'L') out = 'M'; else if (face === 'F') out = 'S';
+      else if (face === 'R') { out = 'M'; turns = -turns; } else { out = 'S'; turns = -turns; }
+    } else if (name === 'x' || name === 'z') {
+      var cur2 = name === 'x' ? 0 : 1; // x follows R, z follows F
+      var f2 = Y_RING[(cur2 + k) % 4];
+      if (f2 === 'R') out = 'x'; else if (f2 === 'F') out = 'z';
+      else if (f2 === 'L') { out = 'x'; turns = -turns; } else { out = 'z'; turns = -turns; }
+    }
+    return out + (turns === 2 ? '2' : (turns === -1 ? "'" : ''));
+  }
+  function mapAlg(alg, k) { return tokens(alg).map(function (t) { return mapToken(t, k); }); }
+
+  // ---------- state helpers ----------
+  function centers(state) { var c = []; for (var f = 0; f < 6; f++) c.push(state[slotAt(NORMAL[FACES[f]].map(function (v) { return v; }), NORMAL[FACES[f]])]); return c; }
+  function normalize(state) { // re-label colours so that centres are home -> orientation independent
+    var c = centers(state), map = [];
+    for (var f = 0; f < 6; f++) map[c[f]] = f;
+    var o = new Uint8Array(54);
+    for (var i = 0; i < 54; i++) o[i] = map[state[i]];
+    return o;
+  }
+  var SOLVED = solved();
+  function isSolved(state) { var n = normalize(state); for (var i = 0; i < 54; i++) if (n[i] !== SOLVED[i]) return false; return true; }
+  function f2lSolved(state) { // everything in D and E layers
+    var n = normalize(state);
+    for (var i = 0; i < 54; i++) if (SLOTS[i].pos[1] <= 0 && n[i] !== SOLVED[i]) return false;
+    return true;
+  }
+  function ollSolved(state) {
+    if (!f2lSolved(state)) return false;
+    var n = normalize(state);
+    for (var i = 0; i < 54; i++) if (SLOTS[i].n[1] === 1 && n[i] !== 0) return false;
+    return true;
+  }
+  var api = {
+    FACES: FACES, SLOTS: SLOTS, slotAt: slotAt, solved: solved, tokens: tokens, tokenize: tokenize, parseToken: parseToken,
+    applyMove: applyMove, applyAlg: applyAlg, invert: invert, invertToken: invertToken, simplify: simplifyAll,
+    mapAlg: mapAlg, normalize: normalize, isSolved: isSolved, f2lSolved: f2lSolved, ollSolved: ollSolved, toString: toString,
+    permFor: permFor, normToken: normToken, BASE: BASE, rot: rot, centers: centers
+  };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api; else root.CE = api;
+})(typeof window !== 'undefined' ? window : this);
+
+var DATA=[{"id":"F2L-1","set":"F2L","num":1,"name":"F2L 1","short":"F2L 1","group":"Corner on top, white up · edge on top","algs":[{"a":"R U' R' U2 R U R'"},{"a":"U2 F' U' F R U R'"},{"a":"U2 R U R' U R U' R'"}],"moves":7,"prob":"","info":"Corner on top (front-right), white facing up. Edge on top-left, green sticker facing up.","connected":false,"key":"1,1,1|0,1,0|-1,1,0|0,1,0"},{"id":"F2L-2","set":"F2L","num":2,"name":"F2L 2","short":"F2L 2","group":"Corner on top, white up · edge on top","algs":[{"a":"U2 R U R' F' U' F"},{"a":"F' U F U2 F' U' F"},{"a":"U2 F' U' F U' F' U F"}],"moves":7,"prob":"","info":"Corner on top (front-right), white facing up. Edge on top-back, green sticker facing the back.","connected":false,"key":"1,1,1|0,1,0|0,1,-1|0,0,-1"},{"id":"F2L-3","set":"F2L","num":3,"name":"F2L 3","short":"F2L 3","group":"Corner on top, white up · edge on top","algs":[{"a":"F' U2 F U F' U' F"},{"a":"R U' R' F' U' F U R U' R'"},{"a":"R U' R' F' U F U R U R'"}],"moves":7,"prob":"","info":"Corner on top (front-right), white facing up. Edge on top-front, green sticker facing the front.","connected":false,"key":"1,1,1|0,1,0|0,1,1|0,0,1"},{"id":"F2L-4","set":"F2L","num":4,"name":"F2L 4","short":"F2L 4","group":"Corner on top, white up · edge on top","algs":[{"a":"R U2 R' U' R U R'"},{"a":"U2 R2 U2 F R F' U2 R2"},{"a":"R U R' U2 F' U F R U R'"}],"moves":7,"prob":"","info":"Corner on top (front-right), white facing up. Edge on top-right, green sticker facing up.","connected":false,"key":"1,1,1|0,1,0|1,1,0|0,1,0"},{"id":"F2L-5","set":"F2L","num":5,"name":"F2L 5","short":"F2L 5","group":"Corner on top, white up · edge on top","algs":[{"a":"U' F' U2 F U' F' U F"},{"a":"U' F' U2 F2 R' F' R"},{"a":"U' F' U2 F U2 F' U2 F"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing up. Edge on top-left, green sticker facing the left.","connected":false,"key":"1,1,1|0,1,0|-1,1,0|-1,0,0"},{"id":"F2L-6","set":"F2L","num":6,"name":"F2L 6","short":"F2L 6","group":"Corner on top, white up · edge on top","algs":[{"a":"U R U2 R' U R U' R'"},{"a":"U R U2 R2 F R F'"},{"a":"U R U2 R' U2 R U2 R'"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing up. Edge on top-back, green sticker facing up.","connected":false,"key":"1,1,1|0,1,0|0,1,-1|0,1,0"},{"id":"F2L-7","set":"F2L","num":7,"name":"F2L 7","short":"F2L 7","group":"Corner on top, white up · edge on top","algs":[{"a":"U2 R2 U2 R' U' R U' R2"},{"a":"R2 U R' U R U2 R' U' R'"},{"a":"R' U' R U' R' U2 R2 U2 R'"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing up. Edge on top-front, green sticker facing up.","connected":true,"key":"1,1,1|0,1,0|0,1,1|0,1,0"},{"id":"F2L-8","set":"F2L","num":8,"name":"F2L 8","short":"F2L 8","group":"Corner on top, white up · edge on top","algs":[{"a":"F U R U' R' F' R U' R'"},{"a":"U' R' F R F' U' F' U' F"},{"a":"F' U' F R U' R' F' U' F"}],"moves":9,"prob":"","info":"Corner on top (front-right), white facing up. Edge on top-right, green sticker facing the right.","connected":true,"key":"1,1,1|0,1,0|1,1,0|1,0,0"},{"id":"F2L-9","set":"F2L","num":9,"name":"F2L 9","short":"F2L 9","group":"Corner on top, white front · edge on top","algs":[{"a":"F' U' F"},{"a":"F' U F U F' U F"},{"a":"U R U2 R' F R' F' R"}],"moves":3,"prob":"","info":"Corner on top (front-right), white facing the front. Edge on top-left, green sticker facing the left.","connected":false,"key":"1,1,1|0,0,1|-1,1,0|-1,0,0"},{"id":"F2L-10","set":"F2L","num":10,"name":"F2L 10","short":"F2L 10","group":"Corner on top, white front · edge on top","algs":[{"a":"U R U' R'"},{"a":"U2 R U2 R'"},{"a":"R' F R F'"}],"moves":4,"prob":"","info":"Corner on top (front-right), white facing the front. Edge on top-right, green sticker facing up.","connected":true,"key":"1,1,1|0,0,1|1,1,0|0,1,0"},{"id":"F2L-11","set":"F2L","num":11,"name":"F2L 11","short":"F2L 11","group":"Corner on top, white front · edge on top","algs":[{"a":"F' U F U2 R U R'"},{"a":"R F U R' U' R F' U' R'"},{"a":"U R' F R F' U R U R'"}],"moves":7,"prob":"","info":"Corner on top (front-right), white facing the front. Edge on top-front, green sticker facing up.","connected":false,"key":"1,1,1|0,0,1|0,1,1|0,1,0"},{"id":"F2L-12","set":"F2L","num":12,"name":"F2L 12","short":"F2L 12","group":"Corner on top, white front · edge on top","algs":[{"a":"U' R U2 R' U2 R U' R'"},{"a":"U' R U2 R' U' R U2 R'"},{"a":"U R F U R U' R' F' R'"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing the front. Edge on top-left, green sticker facing up.","connected":false,"key":"1,1,1|0,0,1|-1,1,0|0,1,0"},{"id":"F2L-13","set":"F2L","num":13,"name":"F2L 13","short":"F2L 13","group":"Corner on top, white front · edge on top","algs":[{"a":"U' R U' R' U F' U' F"},{"a":"U R U R' U2 F' U' F"},{"a":"U F' U' F U' F' U' F"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing the front. Edge on top-back, green sticker facing the back.","connected":false,"key":"1,1,1|0,0,1|0,1,-1|0,0,-1"},{"id":"F2L-14","set":"F2L","num":14,"name":"F2L 14","short":"F2L 14","group":"Corner on top, white front · edge on top","algs":[{"a":"U' R U R' U2 R U' R'"},{"a":"U' R U R' U' R U2 R'"},{"a":"F U F' R' F R U' F'"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing the front. Edge on top-back, green sticker facing up.","connected":false,"key":"1,1,1|0,0,1|0,1,-1|0,1,0"},{"id":"F2L-15","set":"F2L","num":15,"name":"F2L 15","short":"F2L 15","group":"Corner on top, white front · edge on top","algs":[{"a":"U F' U F U' F' U' F"},{"a":"F' U' R' F U' F' U R F"},{"a":"R U R' U R U' R' F' U' F"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing the front. Edge on top-front, green sticker facing the front.","connected":false,"key":"1,1,1|0,0,1|0,1,1|0,0,1"},{"id":"F2L-16","set":"F2L","num":16,"name":"F2L 16","short":"F2L 16","group":"Corner on top, white front · edge on top","algs":[{"a":"U' R U2 R' U F' U' F"},{"a":"R' U' R F' U' R' U2 R F"},{"a":"F' U2 R' U' F' U F R F"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing the front. Edge on top-right, green sticker facing the right.","connected":false,"key":"1,1,1|0,0,1|1,1,0|1,0,0"},{"id":"F2L-17","set":"F2L","num":17,"name":"F2L 17","short":"F2L 17","group":"Corner on top, white right · edge on top","algs":[{"a":"R U R'"},{"a":"R U' R' U' R U' R'"},{"a":"R U2 R' U R U2 R'"}],"moves":3,"prob":"","info":"Corner on top (front-right), white facing the right. Edge on top-back, green sticker facing up.","connected":false,"key":"1,1,1|1,0,0|0,1,-1|0,1,0"},{"id":"F2L-18","set":"F2L","num":18,"name":"F2L 18","short":"F2L 18","group":"Corner on top, white right · edge on top","algs":[{"a":"F R' F' R"},{"a":"U' F' U F"},{"a":"U2 F' U2 F"}],"moves":4,"prob":"","info":"Corner on top (front-right), white facing the right. Edge on top-front, green sticker facing the front.","connected":true,"key":"1,1,1|1,0,0|0,1,1|0,0,1"},{"id":"F2L-19","set":"F2L","num":19,"name":"F2L 19","short":"F2L 19","group":"Corner on top, white right · edge on top","algs":[{"a":"R2 U2 F R2 F' U2 R2"},{"a":"U F' U2 F U2 F' U F"},{"a":"U F' U2 F U F' U2 F"}],"moves":7,"prob":"","info":"Corner on top (front-right), white facing the right. Edge on top-back, green sticker facing the back.","connected":false,"key":"1,1,1|1,0,0|0,1,-1|0,0,-1"},{"id":"F2L-20","set":"F2L","num":20,"name":"F2L 20","short":"F2L 20","group":"Corner on top, white right · edge on top","algs":[{"a":"R' U2 R2 U R2 U R"},{"a":"U F' U2 F U' R U R'"},{"a":"R2 U2 R' U' R U' R' U' R'"}],"moves":7,"prob":"","info":"Corner on top (front-right), white facing the right. Edge on top-front, green sticker facing up.","connected":false,"key":"1,1,1|1,0,0|0,1,1|0,1,0"},{"id":"F2L-21","set":"F2L","num":21,"name":"F2L 21","short":"F2L 21","group":"Corner on top, white right · edge on top","algs":[{"a":"R U' R' U2 F' U' F"},{"a":"U R F R U R' U' F' R'"},{"a":"U' F R' F' R U' F' U' F"}],"moves":7,"prob":"","info":"Corner on top (front-right), white facing the right. Edge on top-right, green sticker facing the right.","connected":false,"key":"1,1,1|1,0,0|1,1,0|1,0,0"},{"id":"F2L-22","set":"F2L","num":22,"name":"F2L 22","short":"F2L 22","group":"Corner on top, white right · edge on top","algs":[{"a":"R' U' R F R' F' U R"},{"a":"U F' U' F U2 F' U F"},{"a":"U F' U' F U F' U2 F"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing the right. Edge on top-left, green sticker facing the left.","connected":false,"key":"1,1,1|1,0,0|-1,1,0|-1,0,0"},{"id":"F2L-23","set":"F2L","num":23,"name":"F2L 23","short":"F2L 23","group":"Corner on top, white right · edge on top","algs":[{"a":"U' R U R' U R U R'"},{"a":"U2 R U' R' U' R U R'"},{"a":"U F' U F U' R U R'"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing the right. Edge on top-left, green sticker facing up.","connected":false,"key":"1,1,1|1,0,0|-1,1,0|0,1,0"},{"id":"F2L-24","set":"F2L","num":24,"name":"F2L 24","short":"F2L 24","group":"Corner on top, white right · edge on top","algs":[{"a":"U' R U' R' U R U R'"},{"a":"U2 R2 U R' U R U2 R2"},{"a":"R U F R' U R U' F' R'"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing the right. Edge on top-right, green sticker facing up.","connected":false,"key":"1,1,1|1,0,0|1,1,0|0,1,0"},{"id":"F2L-25","set":"F2L","num":25,"name":"F2L 25","short":"F2L 25","group":"Corner on top · edge in slot","algs":[{"a":"F' U F R U2 R'"},{"a":"R U' R' F' U2 F"},{"a":"F' U F U' R U' R'"}],"moves":6,"prob":"","info":"Corner on top (front-right), white facing up. Edge in the slot, flipped (green on the right).","connected":false,"key":"1,1,1|0,1,0|1,0,1|1,0,0"},{"id":"F2L-26","set":"F2L","num":26,"name":"F2L 26","short":"F2L 26","group":"Corner on top · edge in slot","algs":[{"a":"R2 U R2 U R2 U2 R2"},{"a":"U2 R2 U2 R2 U' R2 U' R2"},{"a":"U' F R' F' R U' R U R'"}],"moves":7,"prob":"","info":"Corner on top (front-right), white facing up. Edge in the slot, oriented (green on the front).","connected":false,"key":"1,1,1|0,1,0|1,0,1|0,0,1"},{"id":"F2L-27","set":"F2L","num":27,"name":"F2L 27","short":"F2L 27","group":"Corner on top · edge in slot","algs":[{"a":"U' R U' R' U2 R U' R'"},{"a":"U' R U' R' U' R U2 R'"},{"a":"R U' R U2 R' U' R U' R2"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing the front. Edge in the slot, oriented (green on the front).","connected":false,"key":"1,1,1|0,0,1|1,0,1|0,0,1"},{"id":"F2L-28","set":"F2L","num":28,"name":"F2L 28","short":"F2L 28","group":"Corner on top · edge in slot","algs":[{"a":"U' R U R' U F' U' F"},{"a":"U2 R U R' F R' F' R"},{"a":"U2 R U' R' U' F' U' F"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing the front. Edge in the slot, flipped (green on the right).","connected":false,"key":"1,1,1|0,0,1|1,0,1|1,0,0"},{"id":"F2L-29","set":"F2L","num":29,"name":"F2L 29","short":"F2L 29","group":"Corner on top · edge in slot","algs":[{"a":"U' R U2 R' U R U R'"},{"a":"U R U R' U2 R U R'"},{"a":"U F' U F U2 F' U F"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing the right. Edge in the slot, oriented (green on the front).","connected":false,"key":"1,1,1|1,0,0|1,0,1|0,0,1"},{"id":"F2L-30","set":"F2L","num":30,"name":"F2L 30","short":"F2L 30","group":"Corner on top · edge in slot","algs":[{"a":"U F' U' F U' R U R'"},{"a":"U2 F' U' F U R U' R'"},{"a":"U2 F' U F U R U R'"}],"moves":8,"prob":"","info":"Corner on top (front-right), white facing the right. Edge in the slot, flipped (green on the right).","connected":false,"key":"1,1,1|1,0,0|1,0,1|1,0,0"},{"id":"F2L-31","set":"F2L","num":31,"name":"F2L 31","short":"F2L 31","group":"Corner in slot · edge on top","algs":[{"a":"R U2 R' F' U2 F"},{"a":"R U2 R' U F' U F"},{"a":"R U R' U2 F' U F"}],"moves":6,"prob":"","info":"Corner in the slot, white facing the right. Edge on top-front, green sticker facing the front.","connected":false,"key":"1,-1,1|1,0,0|0,1,1|0,0,1"},{"id":"F2L-32","set":"F2L","num":32,"name":"F2L 32","short":"F2L 32","group":"Corner in slot · edge on top","algs":[{"a":"F' U2 F U2 R U R'"},{"a":"U2 F' U F U R U' R'"},{"a":"U2 F' U' F U R U R'"}],"moves":7,"prob":"","info":"Corner in the slot, white facing down. Edge on top-front, green sticker facing up.","connected":false,"key":"1,-1,1|0,-1,0|0,1,1|0,1,0"},{"id":"F2L-33","set":"F2L","num":33,"name":"F2L 33","short":"F2L 33","group":"Corner in slot · edge on top","algs":[{"a":"U2 R U' R' F' U' F"},{"a":"F' U' F U F' U' F"},{"a":"R' F R F' U R U' R'"}],"moves":7,"prob":"","info":"Corner in the slot, white facing the front. Edge on top-front, green sticker facing the front.","connected":false,"key":"1,-1,1|0,0,1|0,1,1|0,0,1"},{"id":"F2L-34","set":"F2L","num":34,"name":"F2L 34","short":"F2L 34","group":"Corner in slot · edge on top","algs":[{"a":"U F' U F R U R'"},{"a":"U' R U R' U' R U R'"},{"a":"U2 F R' F' R2 U R'"}],"moves":7,"prob":"","info":"Corner in the slot, white facing the right. Edge on top-front, green sticker facing up.","connected":false,"key":"1,-1,1|1,0,0|0,1,1|0,1,0"},{"id":"F2L-35","set":"F2L","num":35,"name":"F2L 35","short":"F2L 35","group":"Corner in slot · edge on top","algs":[{"a":"U R U' R' F R' F' R"},{"a":"U R U R' U' F' U' F"},{"a":"U R U' R' U' F' U F"}],"moves":8,"prob":"","info":"Corner in the slot, white facing down. Edge on top-front, green sticker facing the front.","connected":false,"key":"1,-1,1|0,-1,0|0,1,1|0,0,1"},{"id":"F2L-36","set":"F2L","num":36,"name":"F2L 36","short":"F2L 36","group":"Corner in slot · edge on top","algs":[{"a":"U' R U' R' U R U' R'"},{"a":"U' R U' R2 F R F'"},{"a":"U' F' U2 F R U2 R'"}],"moves":8,"prob":"","info":"Corner in the slot, white facing the front. Edge on top-front, green sticker facing up.","connected":false,"key":"1,-1,1|0,0,1|0,1,1|0,1,0"},{"id":"F2L-37","set":"F2L","num":37,"name":"F2L 37","short":"F2L 37","group":"Both in the slot","algs":[{"a":"R2 U2 F R2 F' U2 R' U R'"},{"a":"R U' R U2 F R2 F' U2 R2"},{"a":"R2 U R' U' R' U2 F R F' R'"}],"moves":9,"prob":"","info":"Corner in the slot, white facing down. Edge in the slot, flipped (green on the right).","connected":false,"key":"1,-1,1|0,-1,0|1,0,1|1,0,0"},{"id":"F2L-38","set":"F2L","num":38,"name":"F2L 38","short":"F2L 38","group":"Both in the slot","algs":[{"a":"R2 U2 R' U' R U' R' U2 R'"},{"a":"R U2 R U2 F R F' U2 R2"},{"a":"U' R2 U2 R' U' R U' R' U2 R'"}],"moves":9,"prob":"","info":"Corner in the slot, white facing the front. Edge in the slot, oriented (green on the front).","connected":false,"key":"1,-1,1|0,0,1|1,0,1|0,0,1"},{"id":"F2L-39","set":"F2L","num":39,"name":"F2L 39","short":"F2L 39","group":"Both in the slot","algs":[{"a":"R F U R U' R' F' U' R'"},{"a":"F' U' R' F' U' F U R F"},{"a":"U' R F U R U' R' F' U' R'"}],"moves":9,"prob":"","info":"Corner in the slot, white facing the front. Edge in the slot, flipped (green on the right).","connected":false,"key":"1,-1,1|0,0,1|1,0,1|1,0,0"},{"id":"F2L-40","set":"F2L","num":40,"name":"F2L 40","short":"F2L 40","group":"Both in the slot","algs":[{"a":"R U2 R U R' U R U2 R2"},{"a":"R2 U2 F R' F' U2 R' U2 R'"},{"a":"U' R U2 R U R' U R U2 R2"}],"moves":9,"prob":"","info":"Corner in the slot, white facing the right. Edge in the slot, oriented (green on the front).","connected":false,"key":"1,-1,1|1,0,0|1,0,1|0,0,1"},{"id":"F2L-41","set":"F2L","num":41,"name":"F2L 41","short":"F2L 41","group":"Both in the slot","algs":[{"a":"R U F R U R' U' F' R'"},{"a":"F' R' U' F' U F R U F"},{"a":"U' R U F R U R' U' F' R'"}],"moves":9,"prob":"","info":"Corner in the slot, white facing the right. Edge in the slot, flipped (green on the right).","connected":false,"key":"1,-1,1|1,0,0|1,0,1|1,0,0"},{"id":"OLL-1","set":"OLL","num":1,"name":"OLL 1","short":"OLL 1","nick":"","group":"Dot","algs":[{"a":"R U2 R2 F R F' U2 R' F R F'"}],"moves":11,"prob":"1/108","twoLook":false,"info":"Yellow on top: 0 edges and 0 corners."},{"id":"OLL-2","set":"OLL","num":2,"name":"OLL 2","short":"OLL 2","nick":"","group":"Dot","algs":[{"a":"F R U R' U' F' f R U R' U' f'"}],"moves":12,"prob":"1/54","twoLook":true,"info":"Yellow on top: 0 edges and 0 corners."},{"id":"OLL-3","set":"OLL","num":3,"name":"OLL 3","short":"OLL 3","nick":"","group":"Dot","algs":[{"a":"f R U R' U' f' U' F R U R' U' F'"}],"moves":13,"prob":"1/54","twoLook":false,"info":"Yellow on top: 0 edges and 1 corner."},{"id":"OLL-4","set":"OLL","num":4,"name":"OLL 4","short":"OLL 4","nick":"","group":"Dot","algs":[{"a":"f R U R' U' f' U F R U R' U' F'"}],"moves":13,"prob":"1/54","twoLook":false,"info":"Yellow on top: 0 edges and 1 corner."},{"id":"OLL-5","set":"OLL","num":5,"name":"OLL 5","short":"OLL 5","nick":"","group":"Square shape","algs":[{"a":"r' U2 R U R' U r"}],"moves":7,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 1 corner."},{"id":"OLL-6","set":"OLL","num":6,"name":"OLL 6","short":"OLL 6","nick":"","group":"Square shape","algs":[{"a":"r U2 R' U' R U' r'"}],"moves":7,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 1 corner."},{"id":"OLL-7","set":"OLL","num":7,"name":"OLL 7","short":"OLL 7","nick":"","group":"Small lightning bolt","algs":[{"a":"r U R' U R U2 r'"}],"moves":7,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 1 corner."},{"id":"OLL-8","set":"OLL","num":8,"name":"OLL 8","short":"OLL 8","nick":"","group":"Small lightning bolt","algs":[{"a":"r' U' R U' R' U2 r"}],"moves":7,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 1 corner."},{"id":"OLL-9","set":"OLL","num":9,"name":"OLL 9","short":"OLL 9","nick":"","group":"Fish shape","algs":[{"a":"R U R' U' R' F R2 U R' U' F'"}],"moves":11,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 1 corner."},{"id":"OLL-10","set":"OLL","num":10,"name":"OLL 10","short":"OLL 10","nick":"","group":"Fish shape","algs":[{"a":"R U R' U R' F R F' R U2 R'"}],"moves":11,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 1 corner."},{"id":"OLL-11","set":"OLL","num":11,"name":"OLL 11","short":"OLL 11","nick":"","group":"Small lightning bolt","algs":[{"a":"r U R' U R' F R F' R U2 r'"}],"moves":11,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 1 corner."},{"id":"OLL-12","set":"OLL","num":12,"name":"OLL 12","short":"OLL 12","nick":"","group":"Small lightning bolt","algs":[{"a":"F R U R' U' F' U F R U R' U' F'"}],"moves":13,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 1 corner."},{"id":"OLL-13","set":"OLL","num":13,"name":"OLL 13","short":"OLL 13","nick":"","group":"Knight move","algs":[{"a":"F U R U' R2 F' R U R U' R'"}],"moves":11,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 1 corner."},{"id":"OLL-14","set":"OLL","num":14,"name":"OLL 14","short":"OLL 14","nick":"","group":"Knight move","algs":[{"a":"R' F R U R' F' R F U' F'"}],"moves":10,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 1 corner."},{"id":"OLL-15","set":"OLL","num":15,"name":"OLL 15","short":"OLL 15","nick":"","group":"Knight move","algs":[{"a":"r' U' r R' U' R U r' U r"}],"moves":10,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 1 corner."},{"id":"OLL-16","set":"OLL","num":16,"name":"OLL 16","short":"OLL 16","nick":"","group":"Knight move","algs":[{"a":"r U r' R U R' U' r U' r'"}],"moves":10,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 1 corner."},{"id":"OLL-17","set":"OLL","num":17,"name":"OLL 17","short":"OLL 17","nick":"","group":"Dot","algs":[{"a":"R U R' U R' F R F' U2 R' F R F'"}],"moves":13,"prob":"1/54","twoLook":false,"info":"Yellow on top: 0 edges and 2 corners."},{"id":"OLL-18","set":"OLL","num":18,"name":"OLL 18","short":"OLL 18","nick":"","group":"Dot","algs":[{"a":"r U R' U R U2 r2 U' R U' R' U2 r"}],"moves":13,"prob":"1/54","twoLook":false,"info":"Yellow on top: 0 edges and 2 corners."},{"id":"OLL-19","set":"OLL","num":19,"name":"OLL 19","short":"OLL 19","nick":"","group":"Dot","algs":[{"a":"r' R U R U R' U' M' R' F R F'"}],"moves":12,"prob":"1/54","twoLook":false,"info":"Yellow on top: 0 edges and 2 corners."},{"id":"OLL-20","set":"OLL","num":20,"name":"OLL 20","short":"OLL 20","nick":"","group":"Dot","algs":[{"a":"r U R' U' M2 U R U' R' U' M'"}],"moves":11,"prob":"1/216","twoLook":false,"info":"Yellow on top: 0 edges and 4 corners."},{"id":"OLL-21","set":"OLL","num":21,"name":"OLL 21 · H","short":"OLL 21","nick":"H","group":"Corners oriented (OCLL)","algs":[{"a":"R U2 R' U' R U R' U' R U' R'"},{"a":"F R U R' U' R U R' U' R U R' U' F'","pre":""}],"moves":11,"prob":"1/108","twoLook":true,"info":"Yellow on top: 4 edges and 0 corners."},{"id":"OLL-22","set":"OLL","num":22,"name":"OLL 22 · Pi","short":"OLL 22","nick":"Pi","group":"Corners oriented (OCLL)","algs":[{"a":"R U2 R2 U' R2 U' R2 U2 R"}],"moves":9,"prob":"1/54","twoLook":true,"info":"Yellow on top: 4 edges and 0 corners."},{"id":"OLL-23","set":"OLL","num":23,"name":"OLL 23 · Headlights","short":"OLL 23","nick":"Headlights","group":"Corners oriented (OCLL)","algs":[{"a":"R2 D R' U2 R D' R' U2 R'"},{"a":"R2 D' R U2 R' D R U2 R","pre":"U2"}],"moves":9,"prob":"1/54","twoLook":true,"info":"Yellow on top: 4 edges and 2 corners."},{"id":"OLL-24","set":"OLL","num":24,"name":"OLL 24 · Chameleon","short":"OLL 24","nick":"Chameleon","group":"Corners oriented (OCLL)","algs":[{"a":"r U R' U' r' F R F'"}],"moves":8,"prob":"1/54","twoLook":true,"info":"Yellow on top: 4 edges and 2 corners."},{"id":"OLL-25","set":"OLL","num":25,"name":"OLL 25 · Bowtie","short":"OLL 25","nick":"Bowtie","group":"Corners oriented (OCLL)","algs":[{"a":"F' r U R' U' r' F R"}],"moves":8,"prob":"1/54","twoLook":true,"info":"Yellow on top: 4 edges and 2 corners."},{"id":"OLL-26","set":"OLL","num":26,"name":"OLL 26 · Anti-Sune","short":"OLL 26","nick":"Anti-Sune","group":"Corners oriented (OCLL)","algs":[{"a":"R U2 R' U' R U' R'"},{"a":"L' U' L U' L' U2 L","pre":"U"}],"moves":7,"prob":"1/54","twoLook":true,"info":"Yellow on top: 4 edges and 1 corner."},{"id":"OLL-27","set":"OLL","num":27,"name":"OLL 27 · Sune","short":"OLL 27","nick":"Sune","group":"Corners oriented (OCLL)","algs":[{"a":"R U R' U R U2 R'"},{"a":"L' U2 L U L' U L","pre":"U"}],"moves":7,"prob":"1/54","twoLook":true,"info":"Yellow on top: 4 edges and 1 corner."},{"id":"OLL-28","set":"OLL","num":28,"name":"OLL 28","short":"OLL 28","nick":"","group":"Corners oriented, edges flipped","algs":[{"a":"r U R' U' r' R U R U' R'"}],"moves":10,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 4 corners."},{"id":"OLL-29","set":"OLL","num":29,"name":"OLL 29","short":"OLL 29","nick":"","group":"Awkward shape","algs":[{"a":"R U R' U' R U' R' F' U' F R U R'"}],"moves":13,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-30","set":"OLL","num":30,"name":"OLL 30","short":"OLL 30","nick":"","group":"Awkward shape","algs":[{"a":"F R' F R2 U' R' U' R U R' F2"}],"moves":11,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-31","set":"OLL","num":31,"name":"OLL 31","short":"OLL 31","nick":"","group":"P shape","algs":[{"a":"R' U' F U R U' R' F' R"}],"moves":9,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-32","set":"OLL","num":32,"name":"OLL 32","short":"OLL 32","nick":"","group":"P shape","algs":[{"a":"R U B' U' R' U R B R'"}],"moves":9,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-33","set":"OLL","num":33,"name":"OLL 33","short":"OLL 33","nick":"","group":"T shape","algs":[{"a":"R U R' U' R' F R F'"}],"moves":8,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-34","set":"OLL","num":34,"name":"OLL 34","short":"OLL 34","nick":"","group":"C shape","algs":[{"a":"R U R2 U' R' F R U R U' F'"}],"moves":11,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-35","set":"OLL","num":35,"name":"OLL 35","short":"OLL 35","nick":"","group":"Fish shape","algs":[{"a":"R U2 R2 F R F' R U2 R'"}],"moves":9,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-36","set":"OLL","num":36,"name":"OLL 36","short":"OLL 36","nick":"","group":"W shape","algs":[{"a":"R' U' R U' R' U R U R B' R' B"}],"moves":12,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-37","set":"OLL","num":37,"name":"OLL 37","short":"OLL 37","nick":"","group":"Fish shape","algs":[{"a":"F R' F' R U R U' R'"}],"moves":8,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-38","set":"OLL","num":38,"name":"OLL 38","short":"OLL 38","nick":"","group":"W shape","algs":[{"a":"R U R' U R U' R' U' R' F R F'"}],"moves":12,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-39","set":"OLL","num":39,"name":"OLL 39","short":"OLL 39","nick":"","group":"Big lightning bolt","algs":[{"a":"R U R' F' U' F U R U2 R'"}],"moves":10,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-40","set":"OLL","num":40,"name":"OLL 40","short":"OLL 40","nick":"","group":"Big lightning bolt","algs":[{"a":"R' F R U R' U' F' U R"}],"moves":9,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-41","set":"OLL","num":41,"name":"OLL 41","short":"OLL 41","nick":"","group":"Awkward shape","algs":[{"a":"R U R' U R U2 R' F R U R' U' F'"}],"moves":13,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-42","set":"OLL","num":42,"name":"OLL 42","short":"OLL 42","nick":"","group":"Awkward shape","algs":[{"a":"R' U' R U' R' U2 R F R U R' U' F'"}],"moves":13,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-43","set":"OLL","num":43,"name":"OLL 43","short":"OLL 43","nick":"","group":"P shape","algs":[{"a":"R' U' F' U F R"}],"moves":6,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-44","set":"OLL","num":44,"name":"OLL 44","short":"OLL 44","nick":"","group":"P shape","algs":[{"a":"f R U R' U' f'"},{"a":"F U R U' R' F'","pre":"U2"}],"moves":6,"prob":"1/54","twoLook":true,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-45","set":"OLL","num":45,"name":"OLL 45","short":"OLL 45","nick":"","group":"T shape","algs":[{"a":"F R U R' U' F'"}],"moves":6,"prob":"1/54","twoLook":true,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-46","set":"OLL","num":46,"name":"OLL 46","short":"OLL 46","nick":"","group":"C shape","algs":[{"a":"R' U' R' F R F' U R"}],"moves":8,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 2 corners."},{"id":"OLL-47","set":"OLL","num":47,"name":"OLL 47","short":"OLL 47","nick":"","group":"L shape","algs":[{"a":"R' U' R' F R F' R' F R F' U R"}],"moves":12,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 0 corners."},{"id":"OLL-48","set":"OLL","num":48,"name":"OLL 48","short":"OLL 48","nick":"","group":"L shape","algs":[{"a":"F R U R' U' R U R' U' F'"}],"moves":10,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 0 corners."},{"id":"OLL-49","set":"OLL","num":49,"name":"OLL 49","short":"OLL 49","nick":"","group":"L shape","algs":[{"a":"r U' r2 U r2 U r2 U' r"}],"moves":9,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 0 corners."},{"id":"OLL-50","set":"OLL","num":50,"name":"OLL 50","short":"OLL 50","nick":"","group":"L shape","algs":[{"a":"r' U r2 U' r2 U' r2 U r'"}],"moves":9,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 0 corners."},{"id":"OLL-51","set":"OLL","num":51,"name":"OLL 51","short":"OLL 51","nick":"","group":"I shape (line)","algs":[{"a":"f R U R' U' R U R' U' f'"}],"moves":10,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 0 corners."},{"id":"OLL-52","set":"OLL","num":52,"name":"OLL 52","short":"OLL 52","nick":"","group":"I shape (line)","algs":[{"a":"R U R' U R U' B U' B' R'"}],"moves":10,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 0 corners."},{"id":"OLL-53","set":"OLL","num":53,"name":"OLL 53","short":"OLL 53","nick":"","group":"L shape","algs":[{"a":"r' U' R U' R' U R U' R' U2 r"}],"moves":11,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 0 corners."},{"id":"OLL-54","set":"OLL","num":54,"name":"OLL 54","short":"OLL 54","nick":"","group":"L shape","algs":[{"a":"r U R' U R U' R' U R U2 r'"}],"moves":11,"prob":"1/54","twoLook":false,"info":"Yellow on top: 2 edges and 0 corners."},{"id":"OLL-55","set":"OLL","num":55,"name":"OLL 55","short":"OLL 55","nick":"","group":"I shape (line)","algs":[{"a":"R U2 R2 U' R U' R' U2 F R F'"}],"moves":11,"prob":"1/108","twoLook":false,"info":"Yellow on top: 2 edges and 0 corners."},{"id":"OLL-56","set":"OLL","num":56,"name":"OLL 56","short":"OLL 56","nick":"","group":"I shape (line)","algs":[{"a":"r U r' U R U' R' U R U' R' r U' r'"}],"moves":14,"prob":"1/108","twoLook":false,"info":"Yellow on top: 2 edges and 0 corners."},{"id":"OLL-57","set":"OLL","num":57,"name":"OLL 57","short":"OLL 57","nick":"","group":"Corners oriented, edges flipped","algs":[{"a":"R U R' U' M' U R U' r'"}],"moves":9,"prob":"1/108","twoLook":false,"info":"Yellow on top: 2 edges and 4 corners."},{"id":"PLL-Aa","set":"PLL","num":1,"name":"Aa perm","short":"Aa","group":"Corners only","algs":[{"a":"x R' U R' D2 R U' R' D2 R2 x'","pre":"","post":""},{"a":"R' F R' B2 R F' R' B2 R2","pre":"","post":""}],"moves":9,"prob":"1/18","info":"Corners: 3-cycle. Edges: solved. Headlights on the back in this view.","note":"Corner 3-cycle. One face shows headlights (two matching corners) and the other three do not. Edges are already solved."},{"id":"PLL-Ab","set":"PLL","num":2,"name":"Ab perm","short":"Ab","group":"Corners only","algs":[{"a":"x R2 D2 R U R' D2 R U' R x'","pre":"","post":""},{"a":"R B' R F2 R' B R F2 R2","pre":"U","post":"U'"}],"moves":9,"prob":"1/18","info":"Corners: 3-cycle. Edges: solved. Headlights on the right in this view.","note":"Corner 3-cycle, the mirror direction of Aa. Headlights on one face; edges are solved."},{"id":"PLL-E","set":"PLL","num":3,"name":"E perm","short":"E","group":"Corners only","algs":[{"a":"x' R U' R' D R U R' D' R U R' D R U' R' D' x","pre":"","post":""}],"moves":16,"prob":"1/36","info":"Corners: two adjacent swaps. Edges: solved. No headlights in this view.","note":"Corners swap diagonally in two pairs. No headlights anywhere, and the edges sit between mismatched corners."},{"id":"PLL-F","set":"PLL","num":4,"name":"F perm","short":"F","group":"Adjacent corner swap","algs":[{"a":"R' U' F' R U R' U' R' F R2 U' R' U' R U R' U R","pre":"","post":""},{"a":"R' U R U' R2 F' U' F U R F R' F' R2","pre":"U'","post":""}],"moves":18,"prob":"1/18","info":"Corners: adjacent swap. Edges: diagonal swap. Headlights on the left in this view.","note":"Corner swap plus edge swap. Headlights on one side, with the two edges next to them swapped."},{"id":"PLL-Ga","set":"PLL","num":5,"name":"Ga perm","short":"Ga","group":"G perms","algs":[{"a":"R2 U R' U R' U' R U' R2 D U' R' U R D'","pre":"U'","post":""}],"moves":15,"prob":"1/18","info":"Corners: 3-cycle. Edges: 3-cycle. Headlights on the back in this view.","note":"A G perm: headlights on one face, a corner 3-cycle and an edge 3-cycle. Recognise the face with headlights, then the edge colour that sits next to it."},{"id":"PLL-Gb","set":"PLL","num":6,"name":"Gb perm","short":"Gb","group":"G perms","algs":[{"a":"R' U' R U D' R2 U R' U R U' R U' R2 D","pre":"U'","post":""}],"moves":15,"prob":"1/18","info":"Corners: 3-cycle. Edges: 3-cycle. Headlights on the back in this view.","note":"A G perm: headlights on one face, a corner 3-cycle and an edge 3-cycle."},{"id":"PLL-Gc","set":"PLL","num":7,"name":"Gc perm","short":"Gc","group":"G perms","algs":[{"a":"R2 U' R U' R U R' U R2 D' U R U' R' D","pre":"U'","post":""}],"moves":15,"prob":"1/18","info":"Corners: 3-cycle. Edges: 3-cycle. Headlights on the back in this view.","note":"A G perm: headlights on one face, a corner 3-cycle and an edge 3-cycle."},{"id":"PLL-Gd","set":"PLL","num":8,"name":"Gd perm","short":"Gd","group":"G perms","algs":[{"a":"R U R' U' D R2 U' R U' R' U R' U R2 D'","pre":"U'","post":""}],"moves":15,"prob":"1/18","info":"Corners: 3-cycle. Edges: 3-cycle. Headlights on the back in this view.","note":"A G perm: headlights on one face, a corner 3-cycle and an edge 3-cycle."},{"id":"PLL-H","set":"PLL","num":9,"name":"H perm","short":"H","group":"Edges only","algs":[{"a":"M2 U M2 U2 M2 U M2","pre":"","post":""},{"a":"R2 U2 R U2 R2 U2 R2 U2 R U2 R2","pre":"","post":""}],"moves":7,"prob":"1/72","info":"Corners: solved. Edges: two opposite swaps. Headlights on the front and right and back and left in this view.","note":"Swap opposite edge pairs. Every face shows a mismatched pair of edge stickers, and all corners are solved."},{"id":"PLL-Ja","set":"PLL","num":10,"name":"Ja perm","short":"Ja","group":"Adjacent corner swap","algs":[{"a":"x R2 F R F' R U2 r' U r U2 x'","pre":"","post":""},{"a":"L' U' L F L' U' L U L F' L2 U L","pre":"U2","post":"U'"}],"moves":10,"prob":"1/18","info":"Corners: adjacent swap. Edges: adjacent swap. Headlights on the left in this view.","note":"Swap of two adjacent corners and two adjacent edges. A solved 2-sticker bar sits on one face."},{"id":"PLL-Jb","set":"PLL","num":11,"name":"Jb perm","short":"Jb","group":"Adjacent corner swap","algs":[{"a":"R U R' F' R U R' U' R' F R2 U' R'","pre":"U'","post":""},{"a":"R U2 R' U' R U2 L' U R' U' L","pre":"U'","post":"U"}],"moves":13,"prob":"1/18","info":"Corners: adjacent swap. Edges: adjacent swap. Headlights on the back in this view.","note":"Swap of two adjacent corners and two adjacent edges. A solved 2-sticker bar sits on one face."},{"id":"PLL-Na","set":"PLL","num":12,"name":"Na perm","short":"Na","group":"Diagonal corner swap","algs":[{"a":"R U R' U R U R' F' R U R' U' R' F R2 U' R' U2 R U' R'","pre":"","post":""},{"a":"z U R' D R2 U' R D' U R' D R2 U' R D' z'","pre":"","post":"U'"}],"moves":21,"prob":"1/72","info":"Corners: diagonal swap. Edges: diagonal swap. No headlights in this view.","note":"Swap of two diagonal corners and two edges. No headlights; the pattern looks like a slanted N."},{"id":"PLL-Nb","set":"PLL","num":13,"name":"Nb perm","short":"Nb","group":"Diagonal corner swap","algs":[{"a":"R' U R U' R' F' U' F R U R' F R' F' R U' R","pre":"","post":""}],"moves":17,"prob":"1/72","info":"Corners: diagonal swap. Edges: diagonal swap. No headlights in this view.","note":"Swap of two diagonal corners and two edges. No headlights; the mirror of Na."},{"id":"PLL-Ra","set":"PLL","num":14,"name":"Ra perm","short":"Ra","group":"Adjacent corner swap","algs":[{"a":"R U' R' U' R U R D R' U' R D' R' U2 R'","pre":"U'","post":""},{"a":"R U2 R' U2 R B' R' U' R U R B R2","pre":"","post":"U"}],"moves":15,"prob":"1/18","info":"Corners: adjacent swap. Edges: adjacent swap. Headlights on the back in this view.","note":"Adjacent corner swap and adjacent edge swap. One face shows headlights."},{"id":"PLL-Rb","set":"PLL","num":15,"name":"Rb perm","short":"Rb","group":"Adjacent corner swap","algs":[{"a":"R' U2 R U2 R' F R U R' U' R' F' R2","pre":"U'","post":""},{"a":"R2 F R U R U' R' F' R U2 R' U2 R","pre":"","post":"U"}],"moves":13,"prob":"1/18","info":"Corners: adjacent swap. Edges: adjacent swap. Headlights on the left in this view.","note":"Adjacent corner swap and adjacent edge swap. One face shows headlights."},{"id":"PLL-T","set":"PLL","num":16,"name":"T perm","short":"T","group":"Adjacent corner swap","algs":[{"a":"R U R' U' R' F R2 U' R' U' R U R' F'","pre":"","post":""}],"moves":14,"prob":"1/18","info":"Corners: adjacent swap. Edges: diagonal swap. Headlights on the left in this view.","note":"Swap of two adjacent corners and the two edges across from each other. One face shows headlights."},{"id":"PLL-Ua","set":"PLL","num":17,"name":"Ua perm","short":"Ua","group":"Edges only","algs":[{"a":"R U' R U R U R U' R' U' R2","pre":"","post":""},{"a":"M2 U M U2 M' U M2","pre":"","post":""}],"moves":11,"prob":"1/18","info":"Corners: solved. Edges: 3-cycle. Headlights on the front and right and back and left in this view.","note":"Edge 3-cycle with all corners solved. One face has a solved bar (corner, edge, corner). Edges rotate clockwise or anticlockwise."},{"id":"PLL-Ub","set":"PLL","num":18,"name":"Ub perm","short":"Ub","group":"Edges only","algs":[{"a":"R2 U R U R' U' R' U' R' U R'","pre":"","post":""},{"a":"M2 U' M U2 M' U' M2","pre":"","post":""}],"moves":11,"prob":"1/18","info":"Corners: solved. Edges: 3-cycle. Headlights on the front and right and back and left in this view.","note":"Edge 3-cycle with all corners solved, rotating the opposite way to Ua."},{"id":"PLL-V","set":"PLL","num":19,"name":"V perm","short":"V","group":"Diagonal corner swap","algs":[{"a":"R' U R' U' y R' F' R2 U' R' U R' F R F","pre":"","post":""}],"moves":14,"prob":"1/18","info":"Corners: diagonal swap. Edges: adjacent swap. No headlights in this view.","note":"Swap of two diagonal corners and two edges. One face shows headlights after the swap is seen from the front."},{"id":"PLL-Y","set":"PLL","num":20,"name":"Y perm","short":"Y","group":"Diagonal corner swap","algs":[{"a":"F R U' R' U' R U R' F' R U R' U' R' F R F'","pre":"","post":""}],"moves":17,"prob":"1/18","info":"Corners: diagonal swap. Edges: adjacent swap. No headlights in this view.","note":"Swap of two diagonal corners and two adjacent edges. A solved block sits next to a mismatched corner."},{"id":"PLL-Z","set":"PLL","num":21,"name":"Z perm","short":"Z","group":"Edges only","algs":[{"a":"M' U M2 U M2 U M' U2 M2","pre":"U'","post":""},{"a":"M2 U M2 U M' U2 M2 U2 M'","pre":"","post":"U2"}],"moves":9,"prob":"1/36","info":"Corners: solved. Edges: two adjacent swaps. Headlights on the front and right and back and left in this view.","note":"Swap of two pairs of adjacent edges; corners are all solved."}];
+
+/* ===== 3D cube renderer (three.js) with a plain SVG fallback ===== */
+var STICKER = ['#F3CE1F', '#F28A2E', '#1FA45B', '#F4F4F0', '#D63040', '#2A5AD8'];
+var GRAYST = '#4B5262';
+
+function Cube3D(container) {
+  var self = this;
+  this.el = container;
+  this.state = CE.solved();
+  this.queue = [];
+  this.running = false;
+  this.ms = 240;
+  this.dim = false;
+  this.onMove = null;
+  this.yaw = -0.62; this.pitch = 0.52; this.zoom = 1;
+  this.ok = typeof THREE !== 'undefined';
+  if (!this.ok) { this._initFallback(); return; }
+  try { this._init(); } catch (e) { this.ok = false; container.innerHTML = ''; this._initFallback(); }
+}
+
+Cube3D.prototype._init = function () {
+  var self = this, el = this.el;
+  this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: false });
+  this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  this.renderer.domElement.className = 'cube-canvas';
+  el.appendChild(this.renderer.domElement);
+  this.scene = new THREE.Scene();
+  this.camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+  this.root = new THREE.Group();
+  this.scene.add(this.root);
+  var body = new THREE.MeshBasicMaterial({ color: 0x0c0e13 });
+  var bodyGeo = new THREE.BoxGeometry(0.985, 0.985, 0.985);
+  var shape = new THREE.Shape(), s = 0.43, r = 0.11;
+  shape.moveTo(-s + r, -s); shape.lineTo(s - r, -s); shape.quadraticCurveTo(s, -s, s, -s + r);
+  shape.lineTo(s, s - r); shape.quadraticCurveTo(s, s, s - r, s); shape.lineTo(-s + r, s);
+  shape.quadraticCurveTo(-s, s, -s, s - r); shape.lineTo(-s, -s + r); shape.quadraticCurveTo(-s, -s, -s + r, -s);
+  var stGeo = new THREE.ShapeGeometry(shape, 4);
+  this.cubies = []; this.stickers = new Array(54);
+  var cubieAt = {};
+  for (var x = -1; x <= 1; x++) for (var y = -1; y <= 1; y++) for (var z = -1; z <= 1; z++) {
+    var g = new THREE.Group(); g.position.set(x, y, z);
+    g.add(new THREE.Mesh(bodyGeo, body));
+    this.root.add(g);
+    var cb = { g: g, p: [x, y, z] }; this.cubies.push(cb); cubieAt[x + ',' + y + ',' + z] = cb;
+  }
+  for (var i = 0; i < 54; i++) {
+    var sl = CE.SLOTS[i];
+    var m = new THREE.Mesh(stGeo, new THREE.MeshBasicMaterial({ color: STICKER[sl.face] }));
+    var n = new THREE.Vector3(sl.n[0], sl.n[1], sl.n[2]);
+    m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
+    m.position.copy(n.clone().multiplyScalar(0.4935));
+    cubieAt[sl.pos.join(',')].g.add(m);
+    this.stickers[i] = m;
+  }
+  // interaction: drag to orbit, wheel to zoom
+  var cv = this.renderer.domElement, drag = null;
+  cv.style.touchAction = 'none';
+  cv.addEventListener('pointerdown', function (e) { drag = { x: e.clientX, y: e.clientY }; try { cv.setPointerCapture(e.pointerId); } catch (_) { } });
+  cv.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    self.yaw -= (e.clientX - drag.x) * 0.009; self.pitch += (e.clientY - drag.y) * 0.009;
+    self.pitch = Math.max(-1.45, Math.min(1.45, self.pitch)); drag = { x: e.clientX, y: e.clientY }; self.render();
+  });
+  var end = function () { drag = null; };
+  cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+  cv.addEventListener('wheel', function (e) { e.preventDefault(); self.zoom = Math.max(0.6, Math.min(1.8, self.zoom * (e.deltaY > 0 ? 0.94 : 1.06))); self.render(); }, { passive: false });
+  if (window.ResizeObserver) { new ResizeObserver(function () { self.resize(); }).observe(el); }
+  window.addEventListener('resize', function () { self.resize(); });
+  this.resize(); this._recolor();
+};
+
+Cube3D.prototype.resize = function () {
+  if (!this.ok || !this.renderer) return;
+  var w = this.el.clientWidth || 300, h = this.el.clientHeight || 300;
+  this.renderer.setSize(w, h, false);
+  this.camera.aspect = w / h; this.camera.updateProjectionMatrix();
+  this.render();
+};
+
+Cube3D.prototype.render = function () {
+  if (!this.ok || !this.renderer) return;
+  var a = this.camera.aspect, fov = 30 * Math.PI / 180, R = 2.75;
+  var dv = R / Math.sin(fov / 2), hf = 2 * Math.atan(a * Math.tan(fov / 2)), dh = R / Math.sin(hf / 2);
+  var d = Math.max(dv, dh) / this.zoom;
+  var cp = Math.cos(this.pitch);
+  this.camera.position.set(d * cp * Math.sin(this.yaw), d * Math.sin(this.pitch), d * cp * Math.cos(this.yaw));
+  this.camera.lookAt(0, 0, 0);
+  this.renderer.render(this.scene, this.camera);
+};
+
+Cube3D.prototype.setView = function (name) {
+  if (name === 'top') { this.yaw = -0.62; this.pitch = 0.52; }
+  else if (name === 'bottom') { this.yaw = 2.5; this.pitch = -0.52; }
+  else if (name === 'back') { this.yaw = 2.5; this.pitch = 0.52; }
+  this.render(); if (!this.ok) this._drawFallback();
+};
+
+Cube3D.prototype.setDim = function (on) { this.dim = !!on; this._recolor(); this.render(); };
+
+Cube3D.prototype._recolor = function () {
+  if (!this.ok) { this._drawFallback(); return; }
+  var fm = this.focus ? focusMask(this.focus.set, this.state, this.focus.keys) : null;
+  for (var i = 0; i < 54; i++) {
+    var c = fm ? (fm[i] ? STICKER[this.state[i]] : BLANK) : ((this.dim && CE.SLOTS[i].pos[1] <= 0) ? GRAYST : STICKER[this.state[i]]);
+    this.stickers[i].material.color.set(c);
+  }
+};
+
+Cube3D.prototype.setState = function (st) {
+  this.clearQueue();
+  this.state = Uint8Array.from(st);
+  this._recolor(); this.render();
+};
+
+Cube3D.prototype.clearQueue = function () { var q = this.queue; this.queue = []; this.gen = (this.gen || 0) + 1; q.forEach(function (j) { j.res(); }); };
+
+// Enqueue a move; returns a promise resolved when that move has finished.
+Cube3D.prototype.turn = function (token, opts) {
+  var self = this;
+  return new Promise(function (res) {
+    self.queue.push({ t: token, ms: opts && opts.ms != null ? opts.ms : null, res: res });
+    if (!self.running) self._run();
+  });
+};
+Cube3D.prototype.play = function (tokens, opts) {
+  var last = Promise.resolve(); var self = this;
+  CE.tokens(tokens).forEach(function (t) { last = self.turn(t, opts); });
+  return last;
+};
+Cube3D.prototype._apply = function (token) {
+  this.state = CE.applyMove(this.state, token);
+  this._recolor(); this.render();
+  if (this.onMove) { try { this.onMove(token, this.state); } catch (e) { console.error(e); } }
+};
+Cube3D.prototype._run = function () {
+  var self = this; this.running = true;
+  var step = function () {
+    if (!self.queue.length) { self.running = false; return; }
+    var job = self.queue.shift();
+    var ms = job.ms != null ? job.ms : self.ms;
+    if (self.queue.length > 2 && job.ms == null) ms = Math.min(ms, 70);
+    self._anim(job.t, ms, function () { job.res(); step(); });
+  };
+  step();
+};
+Cube3D.prototype._anim = function (token, ms, done) {
+  var self = this, gen = this.gen || 0;
+  var p = CE.parseToken(token); if (!p) { done(); return; }
+  if (!this.ok || ms <= 0 || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches && ms > 80)) { this._apply(token); done(); return; }
+  var b = CE.BASE[p.name], axis = b[0], layers = b[1], total = b[2] * p.turns * Math.PI / 2;
+  var pivot = new THREE.Group(); this.scene.add(pivot);
+  var moving = [];
+  this.cubies.forEach(function (c) { if (layers.indexOf(c.p[axis]) >= 0) { pivot.attach(c.g); moving.push(c); } });
+  var t0 = performance.now(), dur = ms * (Math.abs(p.turns) === 2 ? 1.5 : 1);
+  var ax = ['x', 'y', 'z'][axis];
+  var frame = function (now) {
+    var k = Math.min(1, (now - t0) / dur), e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+    pivot.rotation[ax] = total * e; self.render();
+    if (k < 1) requestAnimationFrame(frame);
+    else {
+      moving.forEach(function (c) { self.root.attach(c.g); c.g.position.set(c.p[0], c.p[1], c.p[2]); c.g.rotation.set(0, 0, 0); c.g.quaternion.set(0, 0, 0, 1); });
+      self.scene.remove(pivot);
+      if (gen === (self.gen || 0)) self._apply(token); else self.render();
+      done();
+    }
+  };
+  requestAnimationFrame(frame);
+};
+
+/* ----- fallback: two isometric SVG views drawn from the state ----- */
+Cube3D.prototype._initFallback = function () {
+  this.ok = false;
+  this.fb = document.createElement('div'); this.fb.className = 'cube-fallback';
+  this.el.appendChild(this.fb); this._drawFallback();
+};
+Cube3D.prototype._drawFallback = function () {
+  if (!this.fb) return;
+  var a = isoSVG(this.state, { view: 'front', dim: this.dim, focus: this.focus }), b = isoSVG(this.state, { view: 'back', dim: this.dim, focus: this.focus });
+  this.fb.innerHTML = '<div>' + a + '</div><div>' + b + '</div>';
+};
+
+/* ===== App core: helpers, storage, diagrams, case logic ===== */
+var UT = ['', 'U', 'U2', "U'"];
+var BYID = {};
+DATA.forEach(function (c) { BYID[c.id] = c; });
+var SETS = ['F2L', 'OLL', 'PLL'];
+var SETINFO = {
+  F2L: { name: 'F2L', full: 'First Two Layers', count: 41, color: 'var(--f2l)' },
+  OLL: { name: 'OLL', full: 'Orient Last Layer', count: 57, color: 'var(--oll)' },
+  PLL: { name: 'PLL', full: 'Permute Last Layer', count: 21, color: 'var(--pll)' }
+};
+
+function h(tag, attrs) {
+  var el = document.createElement(tag);
+  if (attrs) for (var k in attrs) {
+    var v = attrs[k];
+    if (v == null || v === false) continue;
+    if (k === 'class') el.className = v;
+    else if (k === 'html') el.innerHTML = v;
+    else if (k === 'text') el.textContent = v;
+    else if (k.slice(0, 2) === 'on') el.addEventListener(k.slice(2), v);
+    else if (k === 'style' && typeof v === 'object') Object.assign(el.style, v);
+    else el.setAttribute(k, v === true ? '' : v);
+  }
+  for (var i = 2; i < arguments.length; i++) add(el, arguments[i]);
+  return el;
+}
+function add(el, k) {
+  if (k == null || k === false) return;
+  if (Array.isArray(k)) k.forEach(function (x) { add(el, x); });
+  else el.appendChild(typeof k === 'string' || typeof k === 'number' ? document.createTextNode(String(k)) : k);
+}
+function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); return el; }
+function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function fmtTime(ms) { if (ms == null) return '–'; var s = ms / 1000; return s < 60 ? s.toFixed(2) + 's' : Math.floor(s / 60) + ':' + ('0' + (s % 60).toFixed(1)).slice(-4); }
+
+/* ---------- storage ---------- */
+var STORE_KEY = 'algocube.v1';
+var DB = { status: {}, stat: {}, notes: {}, sessions: [], settings: { speed: 260, dimLL: false }, days: {} };
+var _mem = null;
+function loadDB() {
+  try { var raw = localStorage.getItem(STORE_KEY); if (raw) { var o = JSON.parse(raw); for (var k in DB) if (o[k] != null) DB[k] = o[k]; } } catch (e) { }
+}
+function saveDB() { try { localStorage.setItem(STORE_KEY, JSON.stringify(DB)); } catch (e) { } }
+function getStatus(id) { return DB.status[id] || 'new'; }
+function setStatus(id, s) { DB.status[id] = s; saveDB(); }
+function recordResult(id, ok, ms) {
+  var st = DB.stat[id] || { n: 0, ok: 0, best: null, box: 0, due: 0, streak: 0 };
+  st.n++; if (ok) { st.ok++; st.streak++; if (ms != null && (st.best == null || ms < st.best)) st.best = ms; st.box = Math.min(4, st.box + 1); }
+  else { st.streak = 0; st.box = 0; }
+  var days = [0, 1, 3, 7, 14][st.box]; st.due = Date.now() + days * 86400000; st.last = Date.now();
+  DB.stat[id] = st;
+  var d = new Date().toISOString().slice(0, 10); DB.days[d] = (DB.days[d] || 0) + 1;
+  saveDB();
+}
+function mastery(id) { // 0..1
+  var st = DB.stat[id]; if (!st) return getStatus(id) === 'learned' ? 0.5 : 0;
+  return Math.min(1, st.box / 4 * 0.7 + (st.n ? st.ok / st.n : 0) * 0.3);
+}
+function streakDays() {
+  var n = 0, d = new Date();
+  var key = function (x) { return x.toISOString().slice(0, 10); };
+  if (!DB.days[key(d)]) d.setDate(d.getDate() - 1);
+  while (DB.days[key(d)]) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+
+/* ---------- toast ---------- */
+var _toastT = null;
+function toast(msg) {
+  var t = document.getElementById('toast'); if (!t) return;
+  t.textContent = msg; t.classList.add('show'); clearTimeout(_toastT); _toastT = setTimeout(function () { t.classList.remove('show'); }, 2200);
+}
+function copyText(txt) {
+  var done = function () { toast('Copied to clipboard'); };
+  var fallback = function () {
+    var ta = h('textarea', { style: { position: 'fixed', opacity: 0 } }); ta.value = txt; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { toast('Select the text and copy it manually'); } ta.remove();
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, fallback); else fallback();
+}
+
+/* ---------- case logic ---------- */
+function solTokens(c, i) {
+  var a = c.algs[i || 0];
+  return [].concat(a.pre ? CE.tokens(a.pre) : [], CE.tokens(a.a), a.post ? CE.tokens(a.post) : []);
+}
+function caseState(c, i) { return CE.applyAlg(CE.solved(), CE.invert(solTokens(c, i))); }
+function makeSample(c, v, algIdx) {
+  var base = solTokens(c, algIdx || 0);
+  var m = v.k ? CE.mapAlg(base, v.k) : base;
+  var P = UT[v.a], Q = UT[v.b];
+  var scr = [].concat(Q ? [Q] : [], CE.invert(m), P ? [P] : []);
+  var sol = [].concat(P ? [CE.invertToken(P)] : [], m, Q ? [CE.invertToken(Q)] : []);
+  return { c: c, scr: CE.simplify(scr), sol: CE.simplify(sol), v: v };
+}
+function variantList(c, n, slots) {
+  var combos = [];
+  for (var a = 0; a < 4; a++) for (var b = 0; b < (c.set === 'PLL' ? 4 : 1); b++) for (var k = 0; k < (c.set === 'F2L' && slots ? 4 : 1); k++) combos.push({ a: a, b: b, k: k });
+  var first = combos.shift(); var rest = shuffle(combos); var out = [first];
+  for (var i = 1; i < n; i++) out.push(rest[(i - 1) % rest.length]);
+  return out.slice(0, n);
+}
+function sampleState(s) { return CE.applyAlg(CE.solved(), s.scr); }
+function succeeded(set, st) { return set === 'F2L' ? CE.f2lSolved(st) : set === 'OLL' ? CE.ollSolved(st) : CE.isSolved(st); }
+function isExactSolved(st) { var s = CE.solved(); for (var i = 0; i < 54; i++) if (st[i] !== s[i]) return false; return true; }
+function successText(set) { return set === 'F2L' ? 'the bottom two layers are solved' : set === 'OLL' ? 'the whole top face is yellow' : 'the cube is fully solved'; }
+
+/* ---------- focus: colour only the pieces that matter for the case ---------- */
+var BLANK = '#7A8191';
+var CUBIE_GROUPS = (function () { var m = {}; CE.SLOTS.forEach(function (s, i) { var k = s.pos.join(','); (m[k] = m[k] || []).push(i); }); return Object.keys(m).map(function (k) { return m[k]; }); })();
+function pairKeys(state) { // the F2L corner + edge that are out of place
+  var keys = {};
+  CUBIE_GROUPS.forEach(function (g) {
+    if (g.length < 2) return;
+    if (g.every(function (i) { return state[i] === CE.SLOTS[i].face; })) return;
+    var cols = g.map(function (i) { return state[i]; }), has0 = cols.indexOf(0) >= 0, has3 = cols.indexOf(3) >= 0;
+    if ((g.length === 3 && has3) || (g.length === 2 && !has0 && !has3)) keys[cols.slice().sort().join('')] = 1;
+  });
+  return keys;
+}
+function focusMask(set, state, keys) {
+  var m = []; for (var i = 0; i < 54; i++) m.push(0);
+  CUBIE_GROUPS.forEach(function (g) {
+    if (g.length === 1) { m[g[0]] = 1; return; }
+    var cols = g.map(function (i) { return state[i]; });
+    if (set === 'F2L') { if (keys && keys[cols.slice().sort().join('')]) g.forEach(function (i) { m[i] = 1; }); }
+    else if (cols.indexOf(0) >= 0) g.forEach(function (i) { if (set === 'PLL' || state[i] === 0) m[i] = 1; });
+  });
+  return m;
+}
+/* ---------- diagrams ---------- */
+var _uid = 0;
+function isoSVG(state, o) {
+  o = o || {}; var back = o.view === 'back'; var polys = [];
+  if (o.focus && !o.fmask) o.fmask = focusMask(o.focus.set, state, o.focus.keys);
+  var P = function (x, y, z) { if (back) { x = -x; y = -y; z = -z; } return [(x - z) * 0.866, -y + (x + z) * 0.5]; };
+  for (var i = 0; i < 54; i++) {
+    var s = CE.SLOTS[i], n = s.n; var vis = back ? (n[0] + n[1] + n[2] < 0) : (n[0] + n[1] + n[2] > 0);
+    if (!vis) continue;
+    var c = [s.pos[0] + n[0] * 0.5, s.pos[1] + n[1] * 0.5, s.pos[2] + n[2] * 0.5];
+    var ax = n[0] ? 0 : n[1] ? 1 : 2, t = [0, 1, 2].filter(function (q) { return q !== ax; });
+    var pts = [[1, 1], [1, -1], [-1, -1], [-1, 1]].map(function (sg) {
+      var v = c.slice(); v[t[0]] += sg[0] * 0.44; v[t[1]] += sg[1] * 0.44; var p = P(v[0], v[1], v[2]); return p[0].toFixed(3) + ',' + p[1].toFixed(3);
+    }).join(' ');
+    var col = o.fmask ? (o.fmask[i] ? STICKER[state[i]] : BLANK) : ((o.dim && s.pos[1] <= 0) ? GRAYST : STICKER[state[i]]);
+    polys.push('<polygon points="' + pts + '" fill="' + col + '"/>');
+  }
+  return '<svg class="iso" viewBox="-2.9 -2.7 5.8 5.5" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g stroke="#0c0e13" stroke-width="0.07" stroke-linejoin="round">' + polys.join('') + '</g></svg>';
+}
+function pllArrows(state) {
+  var S = CE.SLOTS, out = [];
+  var nf = { 1: [1, 0], 2: [0, 1], 4: [-1, 0], 5: [0, -1] };
+  var groups = [[[1, 1], [1, -1], [-1, -1], [-1, 1]], [[1, 0], [0, -1], [-1, 0], [0, 1]]];
+  groups.forEach(function (list) {
+    var map = list.map(function (p) {
+      var cols = [];
+      for (var i = 0; i < 54; i++) if (S[i].pos[1] === 1 && S[i].pos[0] === p[0] && S[i].pos[2] === p[1]) cols.push(state[i]);
+      var h = [0, 0]; cols.filter(function (c) { return c !== 0; }).forEach(function (c) { h[0] += nf[c][0]; h[1] += nf[c][1]; });
+      return h;
+    });
+    var done = {};
+    list.forEach(function (p, i) {
+      var to = map[i]; if (to[0] === p[0] && to[1] === p[1]) return;
+      var j = list.findIndex(function (q) { return q[0] === to[0] && q[1] === to[1]; });
+      if (done[i]) return;
+      if (map[j][0] === p[0] && map[j][1] === p[1]) { done[i] = done[j] = 1; out.push({ f: p, t: to, both: true }); }
+      else { done[i] = 1; out.push({ f: p, t: to, both: false }); }
+    });
+  });
+  return out;
+}
+function topSVG(state, mode) {
+  var G = 17, C = 27, B = 8, S = CE.SLOTS, parts = [], id = 'ah' + (++_uid);
+  var col = function (i) { return mode === 'oll' ? (state[i] === 0 ? STICKER[0] : '#5c6376') : STICKER[state[i]]; };
+  for (var i = 0; i < 54; i++) {
+    var s = S[i]; if (s.pos[1] !== 1) continue;
+    var cx = s.pos[0] + 1, cz = s.pos[2] + 1, x, y, w, hh;
+    if (s.n[1] === 1) { x = G + cx * C; y = G + cz * C; w = C - 2; hh = C - 2; }
+    else if (s.n[2] === 1) { x = G + cx * C; y = G + 3 * C + 1; w = C - 2; hh = B; }
+    else if (s.n[2] === -1) { x = G + cx * C; y = G - B - 1; w = C - 2; hh = B; }
+    else if (s.n[0] === 1) { x = G + 3 * C + 1; y = G + cz * C; w = B; hh = C - 2; }
+    else { x = G - B - 1; y = G + cz * C; w = B; hh = C - 2; }
+    parts.push('<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + hh + '" rx="3" fill="' + col(i) + '"/>');
+  }
+  var arrows = '';
+  if (mode === 'pll') {
+    var ctr = function (p) { return [G + (p[0] + 1) * C + C / 2 - 1, G + (p[1] + 1) * C + C / 2 - 1]; };
+    pllArrows(state).forEach(function (a) {
+      var f = ctr(a.f), t = ctr(a.t), dx = t[0] - f[0], dy = t[1] - f[1], L = Math.sqrt(dx * dx + dy * dy) || 1, ux = dx / L, uy = dy / L;
+      var f2 = [f[0] + ux * 5, f[1] + uy * 5], t2 = [t[0] - ux * 5, t[1] - uy * 5];
+      arrows += '<line x1="' + f2[0] + '" y1="' + f2[1] + '" x2="' + t2[0] + '" y2="' + t2[1] + '" stroke="#111" stroke-width="2.6" stroke-linecap="round" marker-end="url(#' + id + ')"' + (a.both ? ' marker-start="url(#' + id + 's)"' : '') + '/>';
+    });
+  }
+  var defs = mode === 'pll' ? '<defs><marker id="' + id + '" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="4.5" markerHeight="4.5" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#111"/></marker><marker id="' + id + 's" viewBox="0 0 8 8" refX="2" refY="4" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" fill="#111"/></marker></defs>' : '';
+  return '<svg class="topv" viewBox="0 0 ' + (G * 2 + 3 * C) + ' ' + (G * 2 + 3 * C) + '" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + defs + parts.join('') + arrows + '</svg>';
+}
+function diagram(c, state) {
+  state = state || caseState(c);
+  if (c.set === 'OLL') return topSVG(state, 'oll');
+  if (c.set === 'PLL') return topSVG(state, 'pll');
+  return isoSVG(state, { focus: { set: 'F2L', keys: pairKeys(state) } });
+}
+
+function algHTML(tokens, active, cls) {
+  return '<span class="alg ' + (cls || '') + '">' + tokens.map(function (t, i) {
+    return '<span class="mv' + (i === active ? ' on' : '') + (i < active ? ' done' : '') + '" data-i="' + i + '">' + esc(t) + '</span>';
+  }).join(' ') + '</span>';
+}
+function countMoves(tokens) { return CE.tokens(tokens).filter(function (t) { return 'xyz'.indexOf(t[0]) < 0; }).length; }
+function setPill(c) { return h('span', { class: 'pill set-' + c.set.toLowerCase() }, c.set); }
+
+var OLL_TIPS = {
+  'Dot': 'No yellow edges on top. Look at which corners are yellow and where the other yellow corner stickers face.',
+  'Square shape': 'Two adjacent yellow corners and edges form a 2×2 block in one corner. The two cases are mirror images.',
+  'Small lightning bolt': 'Yellow edges and corners zig-zag in a short bolt. Mirror pairs mean the same shape pointing the other way.',
+  'Fish shape': 'One yellow corner with an adjacent edge looks like a fish body. Check which way the fish faces.',
+  'Knight move': 'A yellow edge pair and corners laid out like a chess knight move.',
+  'Corners oriented (OCLL)': 'All four edges are already yellow, so only the corners need turning. Count yellow corners to name the case (0, 1 or 2).',
+  'Corners oriented, edges flipped': 'Every corner is yellow on top, with two edges flipped.',
+  'Awkward shape': 'Two yellow edges and two corners that sit unevenly. These are easy to mix up, so check the side stickers.',
+  'P shape': 'Looks like a P: a yellow corner pair joined to an edge pair.',
+  'T shape': 'A line of yellow edges with two adjacent yellow corners forming a T.',
+  'C shape': 'Yellow edges and corners form a C opening to one side.',
+  'W shape': 'Yellow stickers zig-zag like a W across two corners and two edges.',
+  'Big lightning bolt': 'A longer zig-zag with two yellow edges and two corners.',
+  'L shape': 'Two adjacent yellow edges form an L. The corner stickers decide which L case it is.',
+  'I shape (line)': 'Two opposite yellow edges form a line. Corners and side stickers tell the cases apart.'
+};
+var F2L_TIPS = {
+  'Corner on top, white up · edge on top': 'White points up, so you can pair the pieces with U moves first, then insert.',
+  'Corner on top, white front · edge on top': 'White faces the front of the slot. Build the pair, then drop it in with the matching insert.',
+  'Corner on top, white right · edge on top': 'White faces the right. Look for whether the edge colours already match the corner sides.',
+  'Corner on top · edge in slot': 'The edge is already in the middle layer. Pull it out while pairing it with the corner.',
+  'Corner in slot · edge on top': 'The corner is in the slot but wrong. Lift it out and connect it with the edge.',
+  'Both in the slot': 'Both pieces are stuck in the slot. These need a longer sequence to free and reconnect them.'
+};
+
+/* ===== Shell: stage, move pad, router, Learn view ===== */
+var views = {};
+var main, navEl;
+var Stage = {
+  el: null, cube: null, inputOn: false, hook: null, scripted: false, userMoves: [], dwell: 0,
+  init: function () {
+    var self = this;
+    this.cvEl = h('div', { class: 'stage-cv' });
+    this.el = h('div', { class: 'stage' }, this.cvEl,
+      h('div', { class: 'stage-tools' },
+        h('button', { class: 'chip', title: 'Reset the camera', onclick: function () { self.cube.setView('top'); } }, 'Front view'),
+        h('button', { class: 'chip', title: 'View from below', onclick: function () { self.cube.setView('bottom'); } }, 'Underside'),
+        this.dimBtn = h('button', { class: 'chip on', title: 'Colour only the pieces this case is about', onclick: function () { self.focusOn = !self.focusOn; DB.settings.focus = self.focusOn; saveDB(); self.applyFocus(); } }, 'Focus on case')));
+    this.focusOn = DB.settings.focus !== false;
+    this.park = h('div', { id: 'park', hidden: true }); document.body.appendChild(this.park); this.park.appendChild(this.el);
+    this.cube = new Cube3D(this.cvEl);
+    this.cube.ms = DB.settings.speed || 260;
+    this.cube.onMove = function (t, st) { if (self.hook) self.hook(t, st, !self.scripted); };
+    document.addEventListener('keydown', function (e) { self.key(e); });
+  },
+  setDim: function (on) { },
+  setCase: function (c, state) { this.caseRef = { c: c, state: state }; this.applyFocus(); },
+  applyFocus: function () {
+    var r = this.caseRef; this.dimBtn.classList.toggle('on', !!(this.focusOn && r)); this.dimBtn.hidden = !r;
+    this.cube.focus = (r && this.focusOn) ? { set: r.c.set, keys: r.c.set === 'F2L' ? pairKeys(r.state) : null } : null;
+    this.cube._recolor(); this.cube.render();
+  },
+  mount: function (slot) { slot.appendChild(this.el); this.cube.resize(); },
+  reset: function () {
+    this.cube.clearQueue(); this.hook = null; this.inputOn = false; this.scripted = false; this.userMoves = [];
+    this.park.appendChild(this.el); this.dbl = false; this.caseRef = null; this.cube.focus = null; this.dimBtn.hidden = true;
+  },
+  show: function (st) { this.cube.setState(st); },
+  userMove: function (tok) {
+    if (!this.inputOn || this.scripted) return;
+    this.userMoves.push(tok); this.cube.turn(tok, { ms: 150 });
+  },
+  undo: function () {
+    if (!this.inputOn || this.scripted || !this.userMoves.length) return;
+    var t = this.userMoves.pop(); this.cube.turn(CE.invertToken(t), { ms: 150 });
+    if (this.onUndo) this.onUndo();
+  },
+  // play moves as a script (user input paused). Resolves when finished.
+  play: function (tokens, ms) {
+    var self = this; this.scripted = true;
+    return this.cube.play(tokens, { ms: ms }).then(function () { self.scripted = false; });
+  },
+  key: function (e) {
+    if (!this.inputOn || e.ctrlKey || e.metaKey || e.altKey) return;
+    var tg = e.target && e.target.tagName; if (tg === 'INPUT' || tg === 'TEXTAREA' || tg === 'SELECT') return;
+    if (e.key === 'Backspace') { e.preventDefault(); this.undo(); return; }
+    if (e.key === '2') { this.dbl = true; e.preventDefault(); return; }
+    var k = e.key.toLowerCase();
+    if ('urfdlbmesxyz'.indexOf(k) < 0 || k.length !== 1) return;
+    e.preventDefault();
+    var tok = (k === 'm' || k === 'e' || k === 's') ? k.toUpperCase() : ('urfdlb'.indexOf(k) >= 0 ? k.toUpperCase() : k);
+    if (this.dbl) { tok += '2'; this.dbl = false; } else if (e.shiftKey) tok += "'";
+    this.userMove(tok);
+  }
+};
+
+function movePad() {
+  var rows = [['U', 'D'], ['R', 'L'], ['F', 'B']];
+  var btn = function (t) { return h('button', { class: 'mb', 'data-m': t, onclick: function () { Stage.userMove(t); } }, t); };
+  var grid = h('div', { class: 'pad' });
+  ['U', 'R', 'F', 'D', 'L', 'B'].forEach(function (f) {
+    grid.appendChild(h('div', { class: 'pad-g' }, btn(f), btn(f + "'"), btn(f + '2')));
+  });
+  var extra = h('div', { class: 'pad pad-x' });
+  ['M', "M'", 'r', "r'", 'x', "x'", 'y', "y'", 'z', "z'"].forEach(function (t) { extra.appendChild(btn(t)); });
+  return h('div', { class: 'movepad' }, grid, extra,
+    h('div', { class: 'pad-foot' }, h('button', { class: 'btn ghost sm', onclick: function () { Stage.undo(); } }, 'Undo last move'),
+      h('span', { class: 'muted small' }, 'Keys: U R F D L B M x y z · Shift = prime · press 2 first for a double turn · Backspace = undo')));
+}
+
+function seg(options, value, onChange, cls) {
+  var wrap = h('div', { class: 'seg ' + (cls || ''), role: 'group' });
+  options.forEach(function (o) {
+    var b = h('button', { class: value === o[0] ? 'on' : '', type: 'button', onclick: function () {
+      Array.prototype.forEach.call(wrap.children, function (x) { x.classList.remove('on'); }); b.classList.add('on'); onChange(o[0]); } }, o[1]);
+    wrap.appendChild(b);
+  });
+  return wrap;
+}
+function field(label, ctl, hint) { return h('div', { class: 'field' }, h('div', { class: 'flabel' }, label), ctl, hint ? h('div', { class: 'muted small' }, hint) : null); }
+function stepper(val, min, max, on) {
+  var out = h('span', { class: 'stv' }, String(val));
+  var set = function (d) { val = Math.max(min, Math.min(max, val + d)); out.textContent = val; on(val); };
+  return h('div', { class: 'stepper' }, h('button', { type: 'button', onclick: function () { set(-1); } }, '−'), out, h('button', { type: 'button', onclick: function () { set(1); } }, '+'));
+}
+function statusSeg(id) {
+  return seg([['new', 'New'], ['learning', 'Learning'], ['learned', 'Learned']], getStatus(id), function (v) { setStatus(id, v); toast(BYID[id].short + ' marked ' + v); });
+}
+
+/* ---------- router ---------- */
+var TABS = [['learn', 'Learn'], ['scenario', 'Scenario'], ['trainer', 'Trainer'], ['tester', 'Tester'], ['guide', 'Guide'], ['progress', 'Progress']];
+var CUR = { name: 'learn' };
+function go(name, params) {
+  Stage.reset(); window.__viewKey = null;
+  if (views.__cleanup) { try { views.__cleanup(); } catch (e) { } views.__cleanup = null; }
+  CUR = { name: name, params: params || {} };
+  try { localStorage.setItem('algocube.tab', name); } catch (e) { }
+  Array.prototype.forEach.call(navEl.querySelectorAll('button'), function (b) { b.classList.toggle('on', b.dataset.tab === name); b.setAttribute('aria-current', b.dataset.tab === name ? 'page' : 'false'); });
+  clear(main); main.className = 'main v-' + name;
+  views[name](main, params || {});
+  window.scrollTo(0, 0);
+}
+
+/* ---------- Learn ---------- */
+var LS = { set: 'All', q: '', group: '', status: '', sel: null, alg: 0 };
+var DIAGC = {};
+function diagC(c) { return DIAGC[c.id] || (DIAGC[c.id] = diagram(c)); }
+
+views.learn = function (root, p) {
+  if (p && p.id) { LS.sel = p.id; LS.alg = 0; }
+  var wrap = h('div', { class: 'learn' + (LS.sel ? ' has-sel' : '') });
+  var list = h('section', { class: 'learn-list' });
+  var det = h('section', { class: 'learn-detail' });
+  wrap.appendChild(list); wrap.appendChild(det); root.appendChild(wrap);
+
+  var grid = h('div', { class: 'cgrid' });
+  var count = h('div', { class: 'muted small' });
+  var groupSel = h('select', { id: 'lgroup', 'aria-label': 'Filter by group', onchange: function () { LS.group = this.value; drawGrid(); } });
+  function fillGroups() {
+    clear(groupSel); groupSel.appendChild(h('option', { value: '' }, 'All groups'));
+    var seen = {};
+    DATA.forEach(function (c) { if ((LS.set === 'All' || c.set === LS.set) && !seen[c.group]) { seen[c.group] = 1; groupSel.appendChild(h('option', { value: c.group }, c.group)); } });
+    groupSel.value = LS.group;
+    if (groupSel.value !== LS.group) { LS.group = ''; groupSel.value = ''; }
+  }
+  var tabs = h('div', { class: 'setTabs' });
+  function drawTabs() {
+    clear(tabs);
+    [['All', 'All 119']].concat(SETS.map(function (s) { return [s, s + ' ' + SETINFO[s].count]; })).forEach(function (o) {
+      tabs.appendChild(h('button', { class: 'stab' + (LS.set === o[0] ? ' on' : '') + (o[0] !== 'All' ? ' s-' + o[0].toLowerCase() : ''), onclick: function () { LS.set = o[0]; fillGroups(); drawTabs(); drawGrid(); } }, o[1]));
+    });
+  }
+  var search = h('input', { type: 'search', id: 'lsearch', placeholder: 'Search name, group or moves…', value: LS.q, 'aria-label': 'Search algorithms', oninput: function () { LS.q = this.value; drawGrid(); } });
+  var statusSel = h('select', { id: 'lstatus', 'aria-label': 'Filter by status', onchange: function () { LS.status = this.value; drawGrid(); } },
+    [['', 'Any status'], ['new', 'New'], ['learning', 'Learning'], ['learned', 'Learned']].map(function (o) { return h('option', { value: o[0], selected: LS.status === o[0] }, o[1]); }));
+  list.appendChild(h('div', { class: 'phead' }, h('h1', null, 'Learn all 119 algorithms'),
+    h('p', { class: 'lede' }, '41 F2L cases, 57 OLL cases and 21 PLL cases. Pick one to see it on the 3D cube, play the algorithm move by move and mark your progress.')));
+  list.appendChild(tabs);
+  list.appendChild(h('div', { class: 'filters' }, search, groupSel, statusSel));
+  list.appendChild(count); list.appendChild(grid);
+
+  function matches(c) {
+    if (LS.set !== 'All' && c.set !== LS.set) return false;
+    if (LS.group && c.group !== LS.group) return false;
+    if (LS.status && getStatus(c.id) !== LS.status) return false;
+    var q = LS.q.trim().toLowerCase();
+    if (q) { var hay = (c.name + ' ' + c.group + ' ' + (c.nick || '') + ' ' + c.algs.map(function (a) { return a.a; }).join(' ')).toLowerCase(); if (hay.indexOf(q) < 0) return false; }
+    return true;
+  }
+  function drawGrid() {
+    clear(grid); var n = 0, lastSet = '', lastGroup = '';
+    DATA.forEach(function (c) {
+      if (!matches(c)) return; n++;
+      if (c.set !== lastSet || c.group !== lastGroup) { lastSet = c.set; lastGroup = c.group; grid.appendChild(h('div', { class: 'ghead' }, h('span', { class: 'pill set-' + c.set.toLowerCase() }, c.set), ' ', c.group)); }
+      grid.appendChild(h('button', { class: 'cc' + (LS.sel === c.id ? ' sel' : ''), 'data-id': c.id, onclick: function () { select(c.id); } },
+        h('div', { class: 'cc-d', html: diagC(c) }),
+        h('div', { class: 'cc-t' }, c.short, h('i', { class: 'dot st-' + getStatus(c.id), title: getStatus(c.id) })),
+        c.nick ? h('div', { class: 'cc-s' }, c.nick) : null));
+    });
+    count.textContent = n + ' case' + (n === 1 ? '' : 's') + ' shown';
+    if (!n) grid.appendChild(h('div', { class: 'empty' }, 'No cases match. Clear the search or filters.'));
+  }
+  function select(id) {
+    LS.sel = id; LS.alg = 0; wrap.classList.add('has-sel'); drawDetail();
+    Array.prototype.forEach.call(grid.querySelectorAll('.cc'), function (b) { b.classList.toggle('sel', b.dataset.id === id); });
+    if (window.innerWidth < 980) window.scrollTo(0, 0);
+  }
+
+  var pid = 0;
+  function drawDetail() {
+    Stage.reset(); clear(det);
+    if (!LS.sel) { det.appendChild(h('div', { class: 'placeholder' }, h('div', { class: 'ph-icon', html: isoSVG(CE.solved()) }), h('p', null, 'Pick a case on the left to see it in 3D and learn its algorithm.'))); return; }
+    var c = BYID[LS.sel], idx = 0, my = ++pid;
+    var tokens = solTokens(c, LS.alg), scenario = caseState(c, 0);
+    var algEl = h('div', { class: 'algbox' });
+    var slot = h('div', { class: 'stage-slot' });
+    var idxPos = DATA.indexOf(c);
+    function nav(d) { var n = DATA[(idxPos + d + DATA.length) % DATA.length]; select(n.id); }
+    det.appendChild(h('div', { class: 'dhead' },
+      h('button', { class: 'btn ghost sm back', onclick: function () { LS.sel = null; wrap.classList.remove('has-sel'); drawDetail(); } }, '← All cases'),
+      h('div', { class: 'dtitle' }, setPill(c), h('h2', null, c.name), h('div', { class: 'muted' }, c.group)),
+      h('div', { class: 'dnav' }, h('button', { class: 'btn ghost sm', 'aria-label': 'Previous case', onclick: function () { nav(-1); } }, '‹'), h('button', { class: 'btn ghost sm', 'aria-label': 'Next case', onclick: function () { nav(1); } }, '›'))));
+    det.appendChild(slot);
+    Stage.mount(slot); Stage.cube.ms = DB.settings.speed || 260; Stage.setCase(c, scenario); Stage.show(scenario);
+
+    var playBtn;
+    function drawAlg() {
+      algEl.innerHTML = algHTML(tokens, idx - 1);
+      Array.prototype.forEach.call(algEl.querySelectorAll('.mv'), function (m) { m.onclick = function () { jump(+m.dataset.i + 1); }; });
+      if (playBtn) playBtn.textContent = playing ? '❚❚ Pause' : (idx >= tokens.length ? '↺ Replay' : '▶ Play');
+      prog.style.width = (tokens.length ? idx / tokens.length * 100 : 0) + '%';
+    }
+    var playing = false;
+    function jump(n) { playing = false; var st = scenario; for (var i = 0; i < n; i++) st = CE.applyMove(st, tokens[i]); idx = n; Stage.show(st); drawAlg(); }
+    function stepFwd() { if (idx >= tokens.length) return Promise.resolve(); var t = tokens[idx]; idx++; drawAlg(); return Stage.cube.turn(t); }
+    function stepBack() { if (idx <= 0) return; playing = false; idx--; drawAlg(); Stage.cube.turn(CE.invertToken(tokens[idx])); }
+    function playAll() {
+      if (playing) { playing = false; drawAlg(); return; }
+      if (idx >= tokens.length) { Stage.show(scenario); idx = 0; }
+      playing = true; drawAlg();
+      (function loop() { if (!playing || my !== pid) return; if (idx >= tokens.length) { playing = false; drawAlg(); return; } stepFwd().then(function () { setTimeout(loop, 90); }); })();
+    }
+    var prog = h('i');
+    var speed = h('select', { id: 'speed', 'aria-label': 'Playback speed', onchange: function () { DB.settings.speed = +this.value; saveDB(); Stage.cube.ms = +this.value; } },
+      [[520, 'Slow'], [260, 'Normal'], [130, 'Fast'], [60, 'Very fast']].map(function (o) { return h('option', { value: o[0], selected: o[0] === (DB.settings.speed || 260) }, o[1]); }));
+    playBtn = h('button', { class: 'btn primary', onclick: playAll }, '▶ Play');
+    det.appendChild(h('div', { class: 'ctl' },
+      h('button', { class: 'btn ghost', 'aria-label': 'Back to the start', onclick: function () { jump(0); } }, '⏮'),
+      h('button', { class: 'btn ghost', 'aria-label': 'Step back', onclick: stepBack }, '◀'),
+      playBtn,
+      h('button', { class: 'btn ghost', 'aria-label': 'Step forward', onclick: function () { playing = false; stepFwd(); } }, '▶|'),
+      speed));
+    det.appendChild(h('div', { class: 'prog' }, prog));
+
+    var altTabs = h('div', { class: 'alts' });
+    function drawAlts() {
+      clear(altTabs);
+      if (c.algs.length > 1) c.algs.forEach(function (a, i) {
+        altTabs.appendChild(h('button', { class: 'chip' + (LS.alg === i ? ' on' : ''), onclick: function () { LS.alg = i; tokens = solTokens(c, i); jump(0); drawAlts(); drawScr(); } }, i === 0 ? 'Main' : 'Alt ' + i));
+      });
+    }
+    var scrEl = h('div', { class: 'mono scr' });
+    function drawScr() {
+      var scr = CE.simplify(CE.invert(solTokens(c, 0)));
+      scrEl.textContent = scr.join(' ');
+      algInfo.textContent = countMoves(tokens) + ' moves' + (c.set === 'PLL' && (c.algs[LS.alg].pre || c.algs[LS.alg].post) ? ' · includes the AUF this case needs' : '');
+    }
+    var algInfo = h('span', { class: 'muted small' });
+    det.appendChild(h('div', { class: 'card' },
+      h('div', { class: 'row between' }, h('div', { class: 'flabel' }, 'Algorithm'), algInfo),
+      altTabs, algEl,
+      h('div', { class: 'row gap' }, h('button', { class: 'btn ghost sm', onclick: function () { copyText(tokens.join(' ')); } }, 'Copy'),
+        h('button', { class: 'btn ghost sm', onclick: function () { go('scenario', { id: c.id }); } }, 'Practice this scenario →'),
+        h('button', { class: 'btn ghost sm', onclick: function () { go('tester', { ids: [c.id] }); } }, 'Test me on this'))));
+    det.appendChild(h('div', { class: 'card' }, h('div', { class: 'flabel' }, 'Shuffle that creates this case'),
+      h('p', { class: 'muted small' }, 'On a solved cube (yellow on top, green in front) do:'), scrEl,
+      h('div', { class: 'row gap' }, h('button', { class: 'btn ghost sm', onclick: function () { copyText(scrEl.textContent); } }, 'Copy shuffle'))));
+    var tips = [];
+    if (c.set === 'OLL') tips.push(OLL_TIPS[c.group]);
+    if (c.set === 'F2L') { tips.push(F2L_TIPS[c.group]); if (c.connected) tips.push('The corner and edge are already joined, so this is a straight insert.'); }
+    if (c.set === 'PLL') tips.push(c.note);
+    det.appendChild(h('div', { class: 'card recog' },
+      h('div', { class: 'cdiag', html: diagC(c) }),
+      h('div', null, h('div', { class: 'flabel' }, 'Recognise it'),
+        h('p', null, c.info), tips.map(function (t) { return t ? h('p', { class: 'muted' }, t) : null; }),
+        h('div', { class: 'facts' }, h('span', null, 'Moves ', h('b', null, String(c.moves))), c.prob ? h('span', null, 'Chance ', h('b', null, c.prob)) : null,
+          c.twoLook ? h('span', { class: 'star' }, 'Beginner / 2-look') : null))));
+    var note = h('textarea', { id: 'note', rows: 2, placeholder: 'Your own mnemonic or reminder…', oninput: function () { DB.notes[c.id] = this.value; saveDB(); } });
+    note.value = DB.notes[c.id] || '';
+    det.appendChild(h('div', { class: 'card' }, h('div', { class: 'flabel' }, 'Your progress'), statusSeg(c.id), h('div', { class: 'flabel sp' }, 'Notes'), note));
+    drawAlts(); drawScr(); drawAlg();
+  }
+  fillGroups(); drawTabs(); drawGrid(); drawDetail();
+  views.__cleanup = function () { pid++; };
+};
+
+/* ===== Scenario + Trainer ===== */
+var SLOT_NAMES = ['front-right', 'front-left', 'back-left', 'back-right'];
+function variantText(c, v) {
+  var parts = [];
+  if (v.k) parts.push('slot: ' + SLOT_NAMES[v.k]);
+  if (v.a) parts.push('AUF before: ' + UT[v.a]);
+  if (v.b) parts.push('extra AUF: ' + UT[v.b]);
+  return parts.length ? parts.join(' · ') : 'standard orientation';
+}
+function Timer(el) {
+  var t = { t0: 0, run: false, ms: 0, iv: null };
+  t.start = function () { if (t.run) return; t.run = true; t.t0 = performance.now(); t.iv = setInterval(function () { el.textContent = fmtTime(performance.now() - t.t0); }, 80); };
+  t.stop = function () { if (!t.run) return t.ms; t.run = false; clearInterval(t.iv); t.ms = performance.now() - t.t0; el.textContent = fmtTime(t.ms); return t.ms; };
+  t.reset = function () { t.run = false; clearInterval(t.iv); t.ms = 0; el.textContent = '0.00s'; };
+  return t;
+}
+function caseOptions(sel, current) {
+  clear(sel);
+  SETS.forEach(function (s) {
+    var g = h('optgroup', { label: SETINFO[s].full });
+    DATA.filter(function (c) { return c.set === s; }).forEach(function (c) { g.appendChild(h('option', { value: c.id, selected: c.id === current }, c.name + ' — ' + c.group)); });
+    sel.appendChild(g);
+  });
+}
+function markDay() { var d = new Date().toISOString().slice(0, 10); DB.days[d] = (DB.days[d] || 0) + 1; saveDB(); }
+function moveChips(tokens, cls) { return h('div', { class: 'mono bigalg ' + (cls || ''), html: algHTML(tokens, -1) }); }
+
+/* ---------- Scenario ---------- */
+var SC = { id: 'OLL-27', mode: 'virtual', v: { a: 0, b: 0, k: 0 }, slots: false };
+views.scenario = function (root, p) {
+  if (p && p.id) { SC.id = p.id; SC.v = { a: 0, b: 0, k: 0 }; }
+  var c, sample, moves, solved, showSol = false;
+  var timerEl = h('span', { class: 'big mono' }, '0.00s'); var tm = Timer(timerEl);
+  var picker = h('select', { id: 'scase', 'aria-label': 'Choose algorithm', onchange: function () { SC.id = this.value; SC.v = { a: 0, b: 0, k: 0 }; load(); } });
+  var left = h('div', { class: 'slotcol' }), right = h('div', { class: 'panelcol' });
+  root.appendChild(h('div', { class: 'phead' }, h('h1', null, 'Scenario practice'),
+    h('p', { class: 'lede' }, 'Choose any algorithm. The app gives you the exact shuffle that creates its case, so you can practise recognising and solving it.')));
+  var pickRow = h('div', { class: 'pickrow' }, picker,
+    h('button', { class: 'btn ghost', 'aria-label': 'Previous', onclick: function () { step(-1); } }, '‹'),
+    h('button', { class: 'btn ghost', 'aria-label': 'Next', onclick: function () { step(1); } }, '›'),
+    h('button', { class: 'btn ghost', onclick: function () { SC.id = DATA[Math.floor(Math.random() * DATA.length)].id; SC.v = { a: 0, b: 0, k: 0 }; load(); } }, 'Random'));
+  root.appendChild(pickRow);
+  root.appendChild(h('div', { class: 'two' }, left, right));
+  var slot = h('div', { class: 'stage-slot' }); left.appendChild(slot);
+  var statusEl = h('div', { class: 'statusline' });
+  left.appendChild(statusEl);
+  function step(d) { var i = DATA.findIndex(function (x) { return x.id === SC.id; }); SC.id = DATA[(i + d + DATA.length) % DATA.length].id; SC.v = { a: 0, b: 0, k: 0 }; load(); }
+
+  function newVariation() {
+    var list = variantList(c, 6, SC.slots), nv = list[1 + Math.floor(Math.random() * (list.length - 1))] || list[0];
+    SC.v = nv; load();
+  }
+  function finish() {
+    solved = true; var ms = tm.stop(); Stage.inputOn = false;
+    var n = Stage.userMoves.length;
+    statusEl.className = 'statusline ok'; statusEl.textContent = 'Solved in ' + fmtTime(ms) + ' with ' + n + ' moves' + (n && ms ? ' (' + (n / (ms / 1000)).toFixed(1) + ' TPS)' : '') + '. Try a new variation.';
+    markDay();
+  }
+  function load() {
+    c = BYID[SC.id]; sample = makeSample(c, SC.v); solved = false; showSol = false; tm.reset();
+    caseOptions(picker, SC.id); picker.value = SC.id;
+    Stage.reset(); Stage.mount(slot); Stage.setDim(false); Stage.cube.ms = DB.settings.speed || 260;
+    Stage.setCase(c, sampleState(sample)); Stage.show(sampleState(sample));
+    statusEl.className = 'statusline'; statusEl.textContent = SC.mode === 'virtual' ? 'Solve the case on the virtual cube. The timer starts on your first move.' : 'Shuffle your physical cube with the moves on the right, then solve it.';
+    if (SC.mode === 'virtual') {
+      Stage.inputOn = true;
+      Stage.hook = function (t, st, isUser) {
+        if (!isUser || solved) return; tm.start();
+        if (succeeded(c.set, st)) finish();
+      };
+    }
+    drawPanel();
+  }
+  function drawPanel() {
+    clear(right);
+    right.appendChild(h('div', { class: 'card casehead' }, h('div', { class: 'cdiag sm', html: diagram(c, sampleState(sample)) }),
+      h('div', null, h('div', null, setPill(c), ' ', h('b', null, c.name)), h('div', { class: 'muted' }, c.group), h('div', { class: 'muted small' }, 'Goal: ' + successText(c.set) + '.'))));
+    right.appendChild(h('div', { class: 'card' }, h('div', { class: 'row between' }, h('div', { class: 'flabel' }, '1 · Shuffle'), h('span', { class: 'muted small' }, 'Variation: ' + variantText(c, SC.v))),
+      h('p', { class: 'muted small' }, 'Start from a solved cube with yellow on top and green in front, then do:'),
+      moveChips(sample.scr),
+      h('div', { class: 'row gap wrap' },
+        h('button', { class: 'btn ghost sm', onclick: function () { copyText(sample.scr.join(' ')); } }, 'Copy'),
+        h('button', { class: 'btn ghost sm', onclick: newVariation }, 'New variation'),
+        h('button', { class: 'btn ghost sm', onclick: function () { replay(); } }, 'Replay shuffle on the cube'),
+        c.set === 'F2L' ? h('label', { class: 'check' }, h('input', { type: 'checkbox', id: 'scslots', checked: SC.slots, onchange: function () { SC.slots = this.checked; } }), 'Also use the other three slots') : null)));
+    var mode = seg([['virtual', 'Virtual cube'], ['physical', 'My physical cube']], SC.mode, function (v) { SC.mode = v; load(); });
+    var solve = h('div', { class: 'card' }, h('div', { class: 'row between' }, h('div', { class: 'flabel' }, '2 · Solve it'), mode), timerRowEl());
+    if (SC.mode === 'virtual') solve.appendChild(movePad());
+    else {
+      var inp = h('input', { type: 'text', id: 'scmoves', placeholder: "Type the moves you did, e.g. R U R' U'", 'aria-label': 'Moves you performed' });
+      solve.appendChild(h('div', { class: 'row gap wrap' },
+        h('button', { class: 'btn primary', onclick: function () { tm.start(); } }, 'Start timer'),
+        h('button', { class: 'btn', onclick: function () { var ms = tm.stop(); statusEl.className = 'statusline ok'; statusEl.textContent = 'Time ' + fmtTime(ms) + '. Nice. Try a new variation.'; markDay(); } }, 'I solved it')));
+      solve.appendChild(h('div', { class: 'row gap' }, inp, h('button', { class: 'btn ghost', onclick: function () { checkTyped(inp.value); } }, 'Check my moves')));
+      solve.appendChild(h('p', { class: 'muted small' }, 'Typing your moves lets the app check them for you. You can leave this empty and just press “I solved it”.'));
+    }
+    right.appendChild(solve);
+    var solBox = h('div', { class: 'card' }, h('div', { class: 'flabel' }, '3 · Solution'));
+    var inner = h('div');
+    function drawSol() {
+      clear(inner);
+      if (!showSol) inner.appendChild(h('button', { class: 'btn ghost', onclick: function () { showSol = true; drawSol(); } }, 'Show the algorithm'));
+      else {
+        inner.appendChild(moveChips(sample.sol));
+        inner.appendChild(h('div', { class: 'row gap wrap' }, h('button', { class: 'btn ghost sm', onclick: function () { Stage.inputOn = false; Stage.show(sampleState(sample)); Stage.play(sample.sol).then(function () { statusEl.textContent = 'That is the solution. Press Replay shuffle to try again.'; }); } }, '▶ Play it on the cube'),
+          h('button', { class: 'btn ghost sm', onclick: function () { copyText(sample.sol.join(' ')); } }, 'Copy')));
+        if (c.algs.length > 1) inner.appendChild(h('p', { class: 'muted small' }, 'Alternatives are in the Learn tab.'));
+      }
+    }
+    solBox.appendChild(inner); drawSol(); right.appendChild(solBox);
+  }
+  function timerRowEl() { return h('div', { class: 'row gap' }, timerEl, h('span', { class: 'muted small' }, 'timer')); }
+  function replay() {
+    tm.reset(); solved = false; Stage.userMoves = []; Stage.show(CE.solved()); Stage.inputOn = false;
+    statusEl.className = 'statusline'; statusEl.textContent = 'Shuffling…';
+    Stage.play(sample.scr, 130).then(function () { statusEl.textContent = SC.mode === 'virtual' ? 'Your turn. The timer starts on your first move.' : 'Cube shuffled. Now do the same on your physical cube.'; if (SC.mode === 'virtual') Stage.inputOn = true; });
+  }
+  function checkTyped(txt) {
+    var tk; try { tk = CE.tokens(txt); tk.forEach(function (t) { if (!CE.parseToken(t)) throw new Error(t); }); } catch (e) { toast('Could not read the move “' + e.message + '”'); return; }
+    var ok = succeeded(c.set, CE.applyAlg(sampleState(sample), tk));
+    var ms = tm.stop(); statusEl.className = 'statusline ' + (ok ? 'ok' : 'bad');
+    statusEl.textContent = ok ? 'Correct: ' + successText(c.set) + '. ' + (ms ? 'Time ' + fmtTime(ms) + '.' : '') : 'Not quite. Those moves leave the case unsolved. Check the algorithm below and try again.';
+    if (ok) markDay();
+    Stage.show(sampleState(sample)); Stage.inputOn = false; Stage.play(tk, 150);
+  }
+  views.__cleanup = function () { tm.reset(); };
+  load();
+};
+
+/* ---------- Trainer ---------- */
+var TR = { cfg: { sets: { F2L: true, OLL: true, PLL: true }, scope: 'all', order: 'seq', samples: 3, mode: 'virtual', auto: true, showAlg: 'always', slots: true, custom: {} }, run: null };
+views.trainer = function (root) {
+  if (TR.run && TR.run.phase === 'run') drawRun(root); else if (TR.run && TR.run.phase === 'done') drawDone(root); else drawSetup(root);
+};
+function trainerPool() {
+  var cf = TR.cfg;
+  return DATA.filter(function (c) {
+    if (!cf.sets[c.set]) return false;
+    if (cf.scope === 'learning') return getStatus(c.id) === 'learning';
+    if (cf.scope === 'learned') return getStatus(c.id) === 'learned';
+    if (cf.scope === 'custom') return !!cf.custom[c.id];
+    return true;
+  });
+}
+function drawSetup(root) {
+  clear(root); var cf = TR.cfg;
+  root.appendChild(h('div', { class: 'phead' }, h('h1', null, 'Trainer'),
+    h('p', { class: 'lede' }, 'Start from a solved cube. The app shuffles it into one case, you solve it, and the next shuffle carries on from where your cube is now.')));
+  var info = h('div', { class: 'muted' });
+  function upd() { var n = trainerPool().length; info.textContent = n + ' algorithm' + (n === 1 ? '' : 's') + ' selected · ' + n * cf.samples + ' samples'; startBtn.disabled = !n; }
+  var setRow = h('div', { class: 'row gap wrap' });
+  SETS.forEach(function (s) { setRow.appendChild(h('label', { class: 'tog s-' + s.toLowerCase() }, h('input', { type: 'checkbox', id: 'trset' + s, checked: cf.sets[s], onchange: function () { cf.sets[s] = this.checked; upd(); } }), s + ' · ' + SETINFO[s].count)); });
+  var custom = h('div', { class: 'customgrid', hidden: cf.scope !== 'custom' });
+  function drawCustom() {
+    clear(custom);
+    SETS.forEach(function (s) {
+      custom.appendChild(h('div', { class: 'ghead' }, s, ' ', h('button', { class: 'linkbtn', onclick: function () { DATA.forEach(function (c) { if (c.set === s) cf.custom[c.id] = true; }); drawCustom(); upd(); } }, 'all'), ' ', h('button', { class: 'linkbtn', onclick: function () { DATA.forEach(function (c) { if (c.set === s) delete cf.custom[c.id]; }); drawCustom(); upd(); } }, 'none')));
+      var row = h('div', { class: 'chips' });
+      DATA.filter(function (c) { return c.set === s; }).forEach(function (c) {
+        row.appendChild(h('button', { type: 'button', class: 'chip' + (cf.custom[c.id] ? ' on' : ''), onclick: function () { if (cf.custom[c.id]) delete cf.custom[c.id]; else cf.custom[c.id] = true; this.classList.toggle('on'); upd(); } }, c.set === 'PLL' ? c.short : String(c.num)));
+      });
+      custom.appendChild(row);
+    });
+  }
+  var startBtn = h('button', { class: 'btn primary lg', onclick: startRun }, 'Start training');
+  root.appendChild(h('div', { class: 'card form' },
+    field('Algorithm sets', setRow),
+    field('Which algorithms', seg([['all', 'All in those sets'], ['learning', 'Marked “learning”'], ['learned', 'Marked “learned”'], ['custom', 'Pick my own']], cf.scope, function (v) { cf.scope = v; custom.hidden = v !== 'custom'; if (v === 'custom') drawCustom(); upd(); })),
+    custom,
+    field('Order', seg([['seq', 'In order'], ['rand', 'Shuffled']], cf.order, function (v) { cf.order = v; })),
+    field('Samples per algorithm', stepper(cf.samples, 1, 10, function (v) { cf.samples = v; upd(); }), 'Each sample is the same case seen from a different angle (extra AUF, other slots for F2L).'),
+    field('Your cube', seg([['virtual', 'Virtual cube in the app'], ['physical', 'My physical cube']], cf.mode, function (v) { cf.mode = v; })),
+    field('Algorithm display', seg([['always', 'Show while solving'], ['button', 'Hide until I ask']], cf.showAlg, function (v) { cf.showAlg = v; })),
+    h('div', { class: 'row gap wrap' },
+      h('label', { class: 'check' }, h('input', { type: 'checkbox', id: 'trauto', checked: cf.auto, onchange: function () { cf.auto = this.checked; } }), 'Apply the shuffle automatically (virtual cube)'),
+      h('label', { class: 'check' }, h('input', { type: 'checkbox', id: 'trslots', checked: cf.slots, onchange: function () { cf.slots = this.checked; } }), 'F2L: practise all four slots')),
+    info, startBtn));
+  upd(); if (cf.scope === 'custom') drawCustom();
+}
+function startRun() {
+  var cf = TR.cfg, pool = trainerPool(); if (!pool.length) { toast('Select at least one algorithm'); return; }
+  var queue = cf.order === 'rand' ? shuffle(pool) : pool.slice();
+  TR.run = { phase: 'run', queue: queue, qi: 0, si: 0, variants: [], hist: [], results: [], step: 'shuffle', sample: null, moves: 0, shuffleToks: [], startedAt: Date.now() };
+  go('trainer');
+}
+function drawDone(root) {
+  clear(root); var r = TR.run; var done = r.results.filter(function (x) { return !x.skipped; });
+  var avg = done.length ? done.reduce(function (a, x) { return a + x.ms; }, 0) / done.length : null;
+  root.appendChild(h('div', { class: 'phead' }, h('h1', null, 'Session complete'), h('p', { class: 'lede' }, done.length + ' samples solved across ' + r.queue.length + ' algorithms' + (avg ? ' · average ' + fmtTime(avg) : '') + '.')));
+  var tbl = h('div', { class: 'card' });
+  r.queue.forEach(function (c) {
+    var rs = r.results.filter(function (x) { return x.id === c.id && !x.skipped; });
+    tbl.appendChild(h('div', { class: 'rrow' }, h('b', null, c.name), h('span', { class: 'muted' }, rs.length + ' solved'), h('span', { class: 'mono' }, rs.length ? fmtTime(Math.min.apply(null, rs.map(function (x) { return x.ms; }))) + ' best' : '–'), statusSeg(c.id)));
+  });
+  root.appendChild(tbl);
+  root.appendChild(h('div', { class: 'row gap wrap' }, h('button', { class: 'btn primary', onclick: function () { TR.run = null; go('trainer'); } }, 'New session'),
+    h('button', { class: 'btn', onclick: function () { go('tester'); } }, 'Test what you learned')));
+}
+function drawRun(root) {
+  var r = TR.run, cf = TR.cfg; clear(root);
+  var c = r.queue[r.qi];
+  var timerEl = h('span', { class: 'big mono' }, '0.00s'); var tm = Timer(timerEl);
+  var slot = h('div', { class: 'stage-slot' });
+  var statusEl = h('div', { class: 'statusline' });
+  var panel = h('div', { class: 'panelcol' });
+  var prog = h('div', { class: 'prog' }, h('i', { style: { width: (r.qi / r.queue.length * 100) + '%' } }));
+  root.appendChild(h('div', { class: 'runhead' }, h('div', null, h('h1', null, 'Trainer'), h('div', { class: 'muted' }, 'Algorithm ' + (r.qi + 1) + ' of ' + r.queue.length + ' · sample ' + (r.si + 1) + ' of ' + Math.max(cf.samples, r.si + 1))),
+    h('button', { class: 'btn ghost sm', onclick: function () { tm.reset(); Stage.reset(); TR.run = null; go('trainer'); } }, 'End session')));
+  root.appendChild(prog);
+  root.appendChild(h('div', { class: 'two' }, h('div', { class: 'slotcol' }, slot, statusEl), panel));
+  Stage.reset(); Stage.mount(slot); Stage.setDim(false); Stage.cube.ms = DB.settings.speed || 260;
+  var virtual = cf.mode === 'virtual', solvedFlag = false;
+
+  // ---- state continuity ----
+  if (!r.started) { r.started = true; r.hist = []; Stage.show(CE.solved()); }
+  else Stage.show(r.curState || CE.solved());
+  if (!r.variants.length) r.variants = variantList(c, cf.samples, cf.slots);
+  if (!r.sample) {
+    var v = r.variants[r.si] || variantList(c, 2, cf.slots)[1];
+    r.sample = makeSample(c, v);
+    var trans = r.sample.scr;
+    if (virtual && r.hist.length) {
+      var t2 = CE.simplify(CE.invert(r.hist).concat(r.sample.scr));
+      if (t2.length > r.sample.scr.length + 18) { Stage.show(CE.solved()); r.hist = []; r.note = 'Your cube was reset to solved first.'; }
+      else trans = t2;
+    }
+    r.shuffleToks = trans; r.step = 'shuffle'; r.moves = 0; r.applied = false;
+  }
+  var sample = r.sample; Stage.setCase(c, sampleState(sample));
+  Stage.hook = function (t, st, isUser) {
+    r.hist.push(t); if (isExactSolved(st)) r.hist = [];
+    r.curState = st;
+    if (virtual && isUser && r.step === 'solve' && !solvedFlag) {
+      r.moves++; tm.start();
+      if (succeeded(c.set, st)) solved();
+    }
+  };
+  function solved() {
+    solvedFlag = true; var ms = tm.stop(); r.step = 'done'; Stage.inputOn = false; markDay();
+    r.results.push({ id: c.id, ms: ms, moves: r.moves }); drawPanel();
+    statusEl.className = 'statusline ok'; statusEl.textContent = 'Solved in ' + fmtTime(ms) + '.';
+  }
+  function applyShuffle() {
+    if (r.applied) return; r.applied = true; Stage.inputOn = false;
+    statusEl.className = 'statusline'; statusEl.textContent = 'Shuffling…';
+    Stage.play(r.shuffleToks, 130).then(function () { r.step = 'solve'; Stage.inputOn = true; Stage.userMoves = []; statusEl.textContent = 'Your turn. Solve it on the virtual cube.'; drawPanel(); });
+  }
+  function drawPanel() {
+    clear(panel);
+    var cs = sampleState(sample);
+    panel.appendChild(h('div', { class: 'card casehead' }, h('div', { class: 'cdiag sm', html: diagram(c, cs) }),
+      h('div', null, h('div', null, setPill(c), ' ', h('b', null, c.name)), h('div', { class: 'muted' }, c.group), h('div', { class: 'muted small' }, c.info), h('div', { class: 'muted small' }, 'View: ' + variantText(c, sample.v)))));
+    // step 1
+    var s1 = h('div', { class: 'card' + (r.step === 'shuffle' ? ' active' : ' dim') }, h('div', { class: 'flabel' }, '1 · Shuffle'));
+    if (virtual) s1.appendChild(h('p', { class: 'muted small' }, r.hist.length && !r.applied ? 'Continuing from your cube’s current state. These moves lead straight into the next case:' : 'The cube is solved. These moves create the case:'));
+    else s1.appendChild(h('p', { class: 'muted small' }, 'Your physical cube should be completely solved (yellow top, green front). Do:'));
+    s1.appendChild(moveChips(r.shuffleToks));
+    if (r.note) s1.appendChild(h('p', { class: 'muted small' }, r.note));
+    if (r.step === 'shuffle') {
+      s1.appendChild(virtual ? h('button', { class: 'btn primary', onclick: applyShuffle }, 'Apply shuffle') : h('button', { class: 'btn primary', onclick: function () { r.step = 'solve'; r.applied = true; Stage.show(cs); r.curState = cs; r.hist = []; tm.start(); drawPanel(); statusEl.textContent = 'Timer running. Press “I solved it” when finished.'; } }, 'I have shuffled. Start timer'));
+    }
+    panel.appendChild(s1);
+    // step 2
+    var s2 = h('div', { class: 'card' + (r.step === 'solve' ? ' active' : (r.step === 'done' ? ' dim' : ' dim')) }, h('div', { class: 'row between' }, h('div', { class: 'flabel' }, '2 · Solve'), h('div', { class: 'row gap' }, timerEl, h('span', { class: 'muted small' }, 'time'))));
+    var algBox = h('div');
+    function drawAlgBox(show) {
+      clear(algBox);
+      if (show) algBox.appendChild(moveChips(sample.sol)); else algBox.appendChild(h('button', { class: 'btn ghost sm', onclick: function () { drawAlgBox(true); } }, 'Show the algorithm'));
+    }
+    drawAlgBox(cf.showAlg === 'always' || r.step === 'done');
+    s2.appendChild(algBox);
+    if (r.step === 'solve') {
+      s2.appendChild(h('div', { class: 'row gap wrap' },
+        h('button', { class: 'btn ghost sm', onclick: function () {
+          Stage.inputOn = false; Stage.show(cs); r.curState = cs; r.hist = CE.simplify(sample.scr);
+          Stage.play(sample.sol).then(function () { tm.stop(); r.results.push({ id: c.id, skipped: true }); r.step = 'done'; drawPanel(); statusEl.className = 'statusline'; statusEl.textContent = 'That is the solution. Take another sample to try it yourself.'; }); } }, '▶ Show me on the cube'),
+        !virtual ? h('button', { class: 'btn primary', onclick: function () { var ms = tm.stop(); r.step = 'done'; r.results.push({ id: c.id, ms: ms, moves: 0 }); markDay(); r.curState = CE.solved(); r.hist = []; Stage.show(CE.solved()); drawPanel(); statusEl.className = 'statusline ok'; statusEl.textContent = 'Solved in ' + fmtTime(ms) + '.'; } }, 'I solved it') : null,
+        h('button', { class: 'btn ghost sm', onclick: function () { tm.stop(); r.results.push({ id: c.id, skipped: true }); r.step = 'done'; r.skipped = true; drawPanel(); } }, 'Skip')));
+      if (virtual) s2.appendChild(movePad());
+    }
+    panel.appendChild(s2);
+    // step 3
+    if (r.step === 'done') {
+      var lastRes = r.results[r.results.length - 1];
+      var s3 = h('div', { class: 'card active' }, h('div', { class: 'flabel' }, '3 · What next?'));
+      if (virtual && !isExactSolved(r.curState || CE.solved())) s3.appendChild(h('p', { class: 'muted small' }, 'Your cube is not fully solved (' + (c.set === 'PLL' ? 'AUF missing' : 'that is fine for ' + c.set) + '). The next shuffle will start from this exact state.'));
+      s3.appendChild(h('div', { class: 'row gap wrap' },
+        h('button', { class: 'btn primary', onclick: function () { next(true); } }, 'Another sample of ' + c.short),
+        h('button', { class: 'btn', onclick: function () { next(false); } }, r.qi + 1 < r.queue.length ? 'Next algorithm →' : 'Finish session')));
+      panel.appendChild(s3);
+    }
+    if (r.step !== 'solve' || !virtual) { Stage.inputOn = r.step === 'solve' && virtual; }
+  }
+  function next(sameAlg) {
+    tm.reset(); r.sample = null; r.note = '';
+    if (sameAlg) { r.si++; if (r.si >= r.variants.length) r.variants = r.variants.concat(variantList(c, 2, cf.slots).slice(1)); }
+    else { r.qi++; r.si = 0; r.variants = []; if (r.qi >= r.queue.length) { r.phase = 'done'; Stage.reset(); go('trainer'); return; } }
+    go('trainer');
+  }
+  r.sampleState = null;
+  drawPanel();
+  if (r.step === 'shuffle' && virtual && cf.auto) applyShuffle();
+  views.__cleanup = function () { tm.reset(); };
+}
+
+/* ===== Tester, Guide, Progress, boot ===== */
+var TE = { cfg: { sets: { F2L: true, OLL: true, PLL: true }, pool: 'smart', count: 10, mode: 'virtual', showName: true, showDiagram: false, slots: true }, run: null };
+
+views.tester = function (root, p) {
+  if (p && p.ids) { startTest(p.ids); return; }
+  if (TE.run && TE.run.phase === 'run') drawItem(root); else if (TE.run && TE.run.phase === 'done') drawResult(root); else drawTestSetup(root);
+};
+function testPool(cf) {
+  var base = DATA.filter(function (c) { return cf.sets[c.set]; });
+  if (cf.pool === 'learning') base = base.filter(function (c) { return getStatus(c.id) === 'learning'; });
+  if (cf.pool === 'learned') base = base.filter(function (c) { return getStatus(c.id) === 'learned'; });
+  return base;
+}
+function smartOrder(list) {
+  var now = Date.now();
+  return list.map(function (c) {
+    var st = DB.stat[c.id], s = getStatus(c.id);
+    var pr = (st ? (st.due <= now ? 0 : 2) + mastery(c.id) * 3 : (s === 'new' ? 5 : 1)) + Math.random() * 1.5;
+    return { c: c, pr: pr };
+  }).sort(function (a, b) { return a.pr - b.pr; }).map(function (x) { return x.c; });
+}
+function drawTestSetup(root) {
+  clear(root); var cf = TE.cfg;
+  root.appendChild(h('div', { class: 'phead' }, h('h1', null, 'Tester'),
+    h('p', { class: 'lede' }, 'You get a case with no steps and no algorithm. Solve it on the virtual cube or on your own cube, and the app checks the result.')));
+  var info = h('div', { class: 'muted' }), startBtn = h('button', { class: 'btn primary lg', onclick: function () {
+    var pool = testPool(cf); if (!pool.length) { toast('No algorithms match these filters'); return; }
+    var list = cf.pool === 'smart' ? smartOrder(pool) : shuffle(pool);
+    startTest(list.slice(0, cf.count).map(function (c) { return c.id; })); } }, 'Start test');
+  function upd() { var n = testPool(cf).length; info.textContent = n + ' algorithms in the pool · test length ' + Math.min(n, cf.count); startBtn.disabled = !n; }
+  var setRow = h('div', { class: 'row gap wrap' });
+  SETS.forEach(function (s) { setRow.appendChild(h('label', { class: 'tog s-' + s.toLowerCase() }, h('input', { type: 'checkbox', id: 'teset' + s, checked: cf.sets[s], onchange: function () { cf.sets[s] = this.checked; upd(); } }), s + ' · ' + SETINFO[s].count)); });
+  root.appendChild(h('div', { class: 'card form' },
+    field('Algorithm sets', setRow),
+    field('Questions from', seg([['smart', 'Smart review'], ['all', 'Everything'], ['learning', 'Marked “learning”'], ['learned', 'Marked “learned”']], cf.pool, function (v) { cf.pool = v; upd(); }), 'Smart review picks cases you are due to see and the ones you miss most.'),
+    field('Number of questions', stepper(cf.count, 1, 40, function (v) { cf.count = v; upd(); })),
+    field('Your cube', seg([['virtual', 'Virtual cube in the app'], ['physical', 'My physical cube']], cf.mode, function (v) { cf.mode = v; })),
+    h('div', { class: 'row gap wrap' },
+      h('label', { class: 'check' }, h('input', { type: 'checkbox', id: 'tename', checked: cf.showName, onchange: function () { cf.showName = this.checked; } }), 'Show the case name'),
+      h('label', { class: 'check' }, h('input', { type: 'checkbox', id: 'tediag', checked: cf.showDiagram, onchange: function () { cf.showDiagram = this.checked; } }), 'Show the flat case diagram'),
+      h('label', { class: 'check' }, h('input', { type: 'checkbox', id: 'teslots', checked: cf.slots, onchange: function () { cf.slots = this.checked; } }), 'F2L: any of the four slots')),
+    info, startBtn));
+  upd();
+}
+function startTest(ids) {
+  var cf = TE.cfg;
+  var items = ids.map(function (id) { var c = BYID[id]; var vs = variantList(c, 4, cf.slots); var v = vs[Math.floor(Math.random() * vs.length)]; return { c: c, sample: makeSample(c, v) }; });
+  TE.run = { phase: 'run', items: items, i: 0, results: [], started: Date.now() };
+  go('tester');
+}
+function drawItem(root) {
+  var r = TE.run, cf = TE.cfg; clear(root);
+  var it = r.items[r.i], c = it.c, sample = it.sample, virtual = cf.mode === 'virtual';
+  var timerEl = h('span', { class: 'big mono' }, '0.00s'); var tm = Timer(timerEl);
+  var slot = h('div', { class: 'stage-slot' }), statusEl = h('div', { class: 'statusline' }), panel = h('div', { class: 'panelcol' });
+  var st = { done: false, hint: false, gaveUp: false, started: false, tries: 0 };
+  root.appendChild(h('div', { class: 'runhead' }, h('div', null, h('h1', null, 'Test'), h('div', { class: 'muted' }, 'Question ' + (r.i + 1) + ' of ' + r.items.length)),
+    h('button', { class: 'btn ghost sm', onclick: function () { tm.reset(); TE.run = null; go('tester'); } }, 'Quit test')));
+  root.appendChild(h('div', { class: 'prog' }, h('i', { style: { width: (r.i / r.items.length * 100) + '%' } })));
+  root.appendChild(h('div', { class: 'two' }, h('div', { class: 'slotcol' }, slot, statusEl), panel));
+  Stage.reset(); Stage.mount(slot); Stage.setDim(false); Stage.cube.ms = DB.settings.speed || 260;
+  var scState = sampleState(sample); Stage.setCase(c, scState); Stage.show(scState);
+  statusEl.textContent = virtual ? 'Solve it. The timer starts when you make your first move.' : 'Shuffle your cube, press Start timer, then solve it.';
+  function finish(ok, how) {
+    if (st.done) return; st.done = true; var ms = tm.stop(); Stage.inputOn = false;
+    var res = { id: c.id, ok: ok && !st.hint, ms: ms, hint: st.hint, gaveUp: how === 'giveup', moves: Stage.userMoves.length };
+    r.results.push(res); recordResult(c.id, res.ok, ok ? ms : null);
+    statusEl.className = 'statusline ' + (ok ? 'ok' : 'bad');
+    statusEl.textContent = ok ? (st.hint ? 'Solved, but you used a hint so it counts as a miss.' : 'Correct in ' + fmtTime(ms) + '.') : 'Not this time. Study the algorithm below.';
+    drawPanel();
+  }
+  if (virtual) {
+    Stage.inputOn = true;
+    Stage.hook = function (t, s, isUser) { if (!isUser || st.done) return; tm.start(); if (succeeded(c.set, s)) finish(true); };
+  }
+  function drawPanel() {
+    clear(panel);
+    var head = h('div', { class: 'card casehead' });
+    if (cf.showDiagram) head.appendChild(h('div', { class: 'cdiag sm', html: diagram(c, scState) }));
+    head.appendChild(h('div', null, h('div', null, cf.showName ? [setPill(c), ' ', h('b', null, c.name)] : [setPill(c), ' ', h('b', null, 'Mystery case')]),
+      cf.showName ? h('div', { class: 'muted' }, c.group) : null,
+      h('div', { class: 'muted small' }, 'Goal: ' + successText(c.set) + '. No steps shown.')));
+    panel.appendChild(head);
+    var sh = h('div', { class: 'card' }, h('div', { class: 'flabel' }, virtual ? 'The case is already on the cube' : 'Shuffle your cube'));
+    if (!virtual) { sh.appendChild(h('p', { class: 'muted small' }, 'From a solved cube (yellow top, green front):')); sh.appendChild(moveChips(sample.scr)); }
+    else sh.appendChild(h('div', { class: 'row gap wrap' }, h('button', { class: 'btn ghost sm', onclick: function () { var q = h('div'); q.appendChild(moveChips(sample.scr)); sh.appendChild(q); this.remove(); } }, 'Show the shuffle moves')));
+    panel.appendChild(sh);
+    var sv = h('div', { class: 'card' + (st.done ? ' dim' : ' active') }, h('div', { class: 'row between' }, h('div', { class: 'flabel' }, 'Your solve'), h('div', { class: 'row gap' }, timerEl, h('span', { class: 'muted small' }, 'time'))));
+    if (!st.done) {
+      if (virtual) sv.appendChild(movePad());
+      else {
+        var inp = h('input', { type: 'text', id: 'temoves', placeholder: "Type your moves to have them checked, e.g. R U R' U'", 'aria-label': 'Moves you performed' });
+        sv.appendChild(h('div', { class: 'row gap wrap' }, h('button', { class: 'btn ghost', onclick: function () { tm.start(); statusEl.textContent = 'Timer running.'; } }, 'Start timer'),
+          h('button', { class: 'btn primary', onclick: function () { finish(true, 'self'); } }, 'I solved it'), h('button', { class: 'btn', onclick: function () { finish(false, 'self'); } }, 'I missed it')));
+        sv.appendChild(h('div', { class: 'row gap' }, inp, h('button', { class: 'btn ghost', onclick: function () {
+          var tk; try { tk = CE.tokens(inp.value); tk.forEach(function (t) { if (!CE.parseToken(t)) throw new Error(t); }); } catch (e) { toast('Could not read the move “' + e.message + '”'); return; }
+          if (!tk.length) { toast('Type the moves you performed'); return; }
+          var ok = succeeded(c.set, CE.applyAlg(scState, tk)); st.tries++;
+          Stage.show(scState); Stage.scripted = true; Stage.play(tk, 150);
+          if (ok) finish(true, 'typed'); else { statusEl.className = 'statusline bad'; statusEl.textContent = 'Those moves do not solve it. Try again or give up.'; }
+        } }, 'Check my moves')));
+      }
+      var hint = h('div');
+      sv.appendChild(h('div', { class: 'row gap wrap' },
+        h('button', { class: 'btn ghost sm', onclick: function () { st.hint = true; hint.innerHTML = ''; hint.appendChild(h('p', { class: 'muted small' }, 'The first moves are: ', h('b', { class: 'mono' }, sample.sol.slice(0, 3).join(' ') + ' …'), ' (counts as a miss)')); } }, 'Hint: first 3 moves'),
+        h('button', { class: 'btn ghost sm', onclick: function () { finish(false, 'giveup'); } }, 'Give up and show the answer')));
+      sv.appendChild(hint);
+    }
+    panel.appendChild(sv);
+    if (st.done) {
+      var last = r.results[r.results.length - 1];
+      panel.appendChild(h('div', { class: 'card active' }, h('div', { class: 'row between' }, h('div', { class: 'flabel' }, 'Answer'), setPill(c)), h('div', null, h('b', null, c.name)),
+        moveChips(sample.sol),
+        h('div', { class: 'row gap wrap' }, h('button', { class: 'btn ghost sm', onclick: function () { Stage.inputOn = false; Stage.show(scState); Stage.play(sample.sol); } }, '▶ Play the algorithm'),
+          h('button', { class: 'btn primary', onclick: function () { nextItem(); } }, r.i + 1 < r.items.length ? 'Next question →' : 'See results')),
+        !virtual ? h('p', { class: 'muted small' }, 'Put your physical cube back to solved before the next shuffle.') : null));
+    }
+  }
+  function nextItem() { tm.reset(); r.i++; if (r.i >= r.items.length) { r.phase = 'done'; saveSession(r); } go('tester'); }
+  views.__cleanup = function () { tm.reset(); };
+  window.__viewKey = function (e) { if (e.code === 'Space' && !virtual && !st.done && e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON') { e.preventDefault(); tm.run ? null : tm.start(); } };
+  drawPanel();
+}
+function saveSession(r) {
+  var ok = r.results.filter(function (x) { return x.ok; }).length;
+  DB.sessions.unshift({ t: Date.now(), n: r.results.length, ok: ok, mode: TE.cfg.mode }); DB.sessions = DB.sessions.slice(0, 30); saveDB();
+}
+function drawResult(root) {
+  clear(root); var r = TE.run, ok = r.results.filter(function (x) { return x.ok; }), pct = r.results.length ? Math.round(ok.length / r.results.length * 100) : 0;
+  var times = ok.map(function (x) { return x.ms; }).filter(Boolean), avg = times.length ? times.reduce(function (a, b) { return a + b; }, 0) / times.length : null;
+  root.appendChild(h('div', { class: 'phead' }, h('h1', null, 'Test results')));
+  root.appendChild(h('div', { class: 'tiles' },
+    h('div', { class: 'tile' }, h('div', { class: 'tv' }, ok.length + '/' + r.results.length), h('div', { class: 'tl' }, 'correct')),
+    h('div', { class: 'tile' }, h('div', { class: 'tv' }, pct + '%'), h('div', { class: 'tl' }, 'accuracy')),
+    h('div', { class: 'tile' }, h('div', { class: 'tv' }, fmtTime(avg)), h('div', { class: 'tl' }, 'average solve'))));
+  var list = h('div', { class: 'card' });
+  r.results.forEach(function (x) {
+    var c = BYID[x.id];
+    list.appendChild(h('div', { class: 'rrow' }, h('span', { class: 'res ' + (x.ok ? 'ok' : 'bad') }, x.ok ? '✓' : '✗'), h('b', null, c.name), h('span', { class: 'muted small' }, c.group + (x.hint ? ' · hint used' : '') + (x.gaveUp ? ' · gave up' : '')), h('span', { class: 'mono' }, x.ok ? fmtTime(x.ms) : '–'),
+      h('button', { class: 'btn ghost sm', onclick: function () { go('learn', { id: c.id }); } }, 'Study')));
+  });
+  root.appendChild(list);
+  var missed = r.results.filter(function (x) { return !x.ok; }).map(function (x) { return x.id; });
+  root.appendChild(h('div', { class: 'row gap wrap' }, missed.length ? h('button', { class: 'btn primary', onclick: function () { startTest(missed); } }, 'Retry the ' + missed.length + ' missed') : null,
+    h('button', { class: missed.length ? 'btn' : 'btn primary', onclick: function () { TE.run = null; go('tester'); } }, 'New test'),
+    h('button', { class: 'btn ghost', onclick: function () { go('progress'); } }, 'See progress')));
+}
+
+/* ---------- Guide ---------- */
+var NOTATION = [
+  ['R', 'Turn the right face clockwise (as you look at it).'], ['L', 'Turn the left face clockwise.'], ['U', 'Turn the top face clockwise.'], ['D', 'Turn the bottom face clockwise.'],
+  ['F', 'Turn the front face clockwise.'], ['B', 'Turn the back face clockwise.'], ["R'", 'A prime (apostrophe) means anticlockwise.'], ['R2', 'A 2 means a half turn (180°).'],
+  ['r', 'Wide move: the right face and the middle slice turn together.'], ['f', 'Wide front: front face and the slice behind it.'],
+  ['M', 'Middle slice, turning in the direction of L.'], ['S', 'Standing slice, turning in the direction of F.'], ['E', 'Equator slice, turning in the direction of D.'],
+  ['x', 'Rotate the whole cube like R.'], ['y', 'Rotate the whole cube like U.'], ['z', 'Rotate the whole cube like F.']];
+views.guide = function (root) {
+  root.appendChild(h('div', { class: 'phead' }, h('h1', null, 'Guide'), h('p', { class: 'lede' }, 'Everything you need to read the algorithms and get the most out of the app.')));
+  var two = h('div', { class: 'two' }), left = h('div', { class: 'slotcol' }), right = h('div', { class: 'panelcol' });
+  two.appendChild(left); two.appendChild(right); root.appendChild(two);
+  var slot = h('div', { class: 'stage-slot' }); left.appendChild(slot);
+  Stage.mount(slot); Stage.setDim(false); Stage.show(CE.solved()); Stage.cube.ms = 380;
+  var desc = h('p', { class: 'muted' }, 'Press a move to watch it on the cube.');
+  var grid = h('div', { class: 'nota' });
+  NOTATION.forEach(function (n) {
+    grid.appendChild(h('button', { class: 'mb wide', onclick: function () { desc.textContent = n[0] + ': ' + n[1]; Stage.cube.turn(n[0]); } }, n[0]));
+  });
+  left.appendChild(h('div', { class: 'card' }, h('div', { class: 'flabel' }, 'Try the notation'), grid, desc,
+    h('button', { class: 'btn ghost sm', onclick: function () { Stage.show(CE.solved()); } }, 'Reset the cube')));
+  var sec = function (t, body) { right.appendChild(h('div', { class: 'card prose' }, h('h3', null, t), body)); };
+  sec('The 119 algorithms', h('div', null,
+    h('p', null, 'CFOP solves the cube in four stages: Cross, F2L, OLL and PLL. This app covers the 119 algorithm cases behind the last three.'),
+    h('ul', null, h('li', null, h('b', null, 'F2L, 41 cases. '), 'Place a corner and its edge together in a slot. Every cross-solved cube needs this four times.'),
+      h('li', null, h('b', null, 'OLL, 57 cases. '), 'Turn every piece on the last layer so the top face is all yellow.'),
+      h('li', null, h('b', null, 'PLL, 21 cases. '), 'Move the last-layer pieces into their places to finish the cube.'))));
+  sec('How to hold the cube', h('p', null, 'Hold the cube with yellow on top and green in front. Cross is on white at the bottom. F2L cases are shown for the front-right slot, with the corner and edge belonging between the green and orange centres. OLL and PLL cases are shown from above.'));
+  sec('Reading the algorithm', h('p', null, 'Letters are faces, an apostrophe is anticlockwise, a 2 is a half turn. “AUF” means adjust the top layer with a U move so the case lines up before the algorithm or so the cube finishes aligned. The app shows the AUF a case needs inside the algorithm.'));
+  sec('Suggested learning order', h('ol', null, h('li', null, 'Learn the 7 beginner OLLs and a few PLLs (marked “Beginner / 2-look” and the U, H, Z, A, T, J perms). '),
+    h('li', null, 'Practise F2L in the Trainer with 3 samples per case until you recognise each case in a second.'),
+    h('li', null, 'Add the full OLL set in groups of 4 to 6 cases. Use the Scenario tab for slow, deliberate repetition.'),
+    h('li', null, 'Finish with the remaining PLLs, then use the Tester with Smart review to keep everything fresh.')));
+  sec('How the Trainer works', h('p', null, 'The Trainer starts from a solved cube, gives you the shuffle for one case, and waits until you solve it. Then you pick another sample or the next algorithm and the next shuffle continues from the state your cube is in. Samples of the same case change the AUF, and for F2L they can move the case to the other three slots.'));
+  sec('How the Tester works', h('p', null, 'The Tester gives you a case with no steps. On the virtual cube the app watches your moves and checks the result automatically. With a physical cube, type the moves you used to get them verified, or mark yourself. Smart review brings back cases you are due to revisit.'));
+  sec('Keyboard shortcuts', h('p', null, 'On the virtual cube: U R F D L B turn faces, M S E turn slices, x y z rotate the cube. Hold Shift for the prime. Press 2 first for a half turn. Backspace undoes your last move.'));
+};
+
+/* ---------- Progress ---------- */
+views.progress = function (root) {
+  var learned = 0, learning = 0;
+  DATA.forEach(function (c) { var s = getStatus(c.id); if (s === 'learned') learned++; else if (s === 'learning') learning++; });
+  var att = 0, okn = 0; for (var k in DB.stat) { att += DB.stat[k].n; okn += DB.stat[k].ok; }
+  root.appendChild(h('div', { class: 'phead' }, h('h1', null, 'Progress'), h('p', { class: 'lede' }, 'Your status, test accuracy and review schedule. Saved in this browser.')));
+  root.appendChild(h('div', { class: 'tiles' },
+    h('div', { class: 'tile' }, h('div', { class: 'tv' }, learned + '/119'), h('div', { class: 'tl' }, 'learned')),
+    h('div', { class: 'tile' }, h('div', { class: 'tv' }, String(learning)), h('div', { class: 'tl' }, 'learning')),
+    h('div', { class: 'tile' }, h('div', { class: 'tv' }, att ? Math.round(okn / att * 100) + '%' : '–'), h('div', { class: 'tl' }, 'test accuracy')),
+    h('div', { class: 'tile' }, h('div', { class: 'tv' }, streakDays() + 'd'), h('div', { class: 'tl' }, 'practice streak'))));
+  SETS.forEach(function (s) {
+    var cs = DATA.filter(function (c) { return c.set === s; }), l = cs.filter(function (c) { return getStatus(c.id) === 'learned'; }).length, g = cs.filter(function (c) { return getStatus(c.id) === 'learning'; }).length;
+    var card = h('div', { class: 'card' }, h('div', { class: 'row between' }, h('div', null, setPill({ set: s }), ' ', h('b', null, SETINFO[s].full)), h('span', { class: 'muted' }, l + ' learned · ' + g + ' learning · ' + cs.length + ' total')),
+      h('div', { class: 'bar' }, h('i', { class: 'b-l', style: { width: l / cs.length * 100 + '%' } }), h('i', { class: 'b-g', style: { width: g / cs.length * 100 + '%' } })));
+    var grid = h('div', { class: 'mgrid' });
+    cs.forEach(function (c) {
+      var m = mastery(c.id), st = DB.stat[c.id];
+      grid.appendChild(h('button', { class: 'mcell st-' + getStatus(c.id), style: { '--m': m }, title: c.name + ' · ' + getStatus(c.id) + (st ? ' · ' + st.ok + '/' + st.n + ' correct' + (st.best ? ' · best ' + fmtTime(st.best) : '') : ''), onclick: function () { go('learn', { id: c.id }); } }, c.set === 'PLL' ? c.short : String(c.num)));
+    });
+    card.appendChild(grid); root.appendChild(card);
+  });
+  root.appendChild(h('div', { class: 'muted small' }, 'Cell outline shows your status; the fill grows as you answer correctly in the Tester.'));
+  var weak = DATA.filter(function (c) { var s = DB.stat[c.id]; return s && s.n >= 1 && s.ok / s.n < 0.7; }).slice(0, 12);
+  if (weak.length) root.appendChild(h('div', { class: 'card' }, h('div', { class: 'flabel' }, 'Needs work'), h('div', { class: 'chips' }, weak.map(function (c) { return h('button', { class: 'chip', onclick: function () { go('learn', { id: c.id }); } }, c.name); })),
+    h('button', { class: 'btn ghost sm', onclick: function () { TE.run = null; startTest(weak.map(function (c) { return c.id; })); } }, 'Test these now')));
+  if (DB.sessions.length) root.appendChild(h('div', { class: 'card' }, h('div', { class: 'flabel' }, 'Recent tests'),
+    DB.sessions.slice(0, 8).map(function (s) { return h('div', { class: 'rrow' }, h('span', { class: 'mono' }, new Date(s.t).toLocaleDateString()), h('span', null, s.ok + ' / ' + s.n + ' correct'), h('span', { class: 'muted' }, s.mode)); })));
+  var ta = h('textarea', { id: 'backup', rows: 3, 'aria-label': 'Backup data' }); ta.value = JSON.stringify({ status: DB.status, stat: DB.stat, notes: DB.notes });
+  root.appendChild(h('div', { class: 'card' }, h('div', { class: 'flabel' }, 'Back up or restore'), h('p', { class: 'muted small' }, 'Copy this text somewhere safe. Paste a saved backup here and press Restore to load it, for example on another device.'), ta,
+    h('div', { class: 'row gap wrap' }, h('button', { class: 'btn ghost sm', onclick: function () { copyText(ta.value); } }, 'Copy'),
+      h('button', { class: 'btn ghost sm', onclick: function () { try { var o = JSON.parse(ta.value); DB.status = o.status || {}; DB.stat = o.stat || {}; DB.notes = o.notes || {}; saveDB(); toast('Progress restored'); go('progress'); } catch (e) { toast('That backup could not be read'); } } }, 'Restore'),
+      h('button', { class: 'btn ghost sm', onclick: function () { if (this.dataset.sure) { DB.status = {}; DB.stat = {}; DB.notes = {}; DB.sessions = []; DB.days = {}; saveDB(); go('progress'); } else { this.dataset.sure = 1; this.textContent = 'Press again to erase everything'; } } }, 'Reset all progress'))));
+};
+
+/* ---------- boot ---------- */
+(function boot() {
+  loadDB();
+  var app = document.getElementById('app');
+  navEl = h('nav', { class: 'tabs', 'aria-label': 'Sections' }, TABS.map(function (t) { return h('button', { 'data-tab': t[0], onclick: function () { go(t[0]); } }, t[1]); }));
+  app.appendChild(h('header', { class: 'top' }, h('div', { class: 'brand' }, h('span', { class: 'mark', html: markSVG() }), h('span', { class: 'wm' }, 'AlgoCube'), h('span', { class: 'wm2' }, '119')), navEl));
+  main = h('main', { class: 'main' }); app.appendChild(main);
+  Stage.init();
+  document.addEventListener('keydown', function (e) { if (window.__viewKey) window.__viewKey(e); });
+  var t = 'learn'; try { t = localStorage.getItem('algocube.tab') || 'learn'; } catch (e) { }
+  if (!views[t]) t = 'learn';
+  go(t);
+})();
+function markSVG() {
+  var cols = ['#F3CE1F', '#F28A2E', '#1FA45B', '#D63040', '#2A5AD8', '#F4F4F0', '#1FA45B', '#F3CE1F', '#2A5AD8'];
+  return '<svg viewBox="0 0 30 30" width="26" height="26" aria-hidden="true">' + cols.map(function (c, i) { return '<rect x="' + (i % 3) * 10 + '" y="' + Math.floor(i / 3) * 10 + '" width="9" height="9" rx="2" fill="' + c + '"/>'; }).join('') + '</svg>';
+}
+
+</script>
+
+</body></html>
